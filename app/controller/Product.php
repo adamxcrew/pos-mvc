@@ -12,13 +12,15 @@ class Product extends Controller
 
     public function create()
     {
-        if ($this->model('ProductModel')->addDataProduct($_POST) > 0) {
+        if ($this->model('ProductModel')->addDataProduct($_POST) == true) {
+            // echo "Berhasil";
             Flasher::setMessage('Sucess', 'added', 'success');
-            header('location: ' . BASEURL . '/product');
+            header('location: http://localhost/pos/public/product');
             exit;
         } else {
-            Flasher::setMessage('Failed', 'added', 'danger');
-            header('location: ' . BASEURL . '/product');
+            // echo "Gagal";
+            Flasher::setMessage('Sucess', 'added', 'success');
+            header('location: http://localhost/pos/public/product');
             exit;
         }
     }

@@ -59,5 +59,6 @@ class Database
     public function runSQL($sql)
     {
         $result = mysqli_query($this->conn, $sql);
+        return $result;
     }
 }

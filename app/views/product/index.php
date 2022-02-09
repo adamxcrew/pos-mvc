@@ -17,26 +17,28 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Product Name</th>
-                                    <!-- <th scope="col">Product Image</th> -->
+                                    <th scope="col">Product Image</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Price</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $no = 1;
-                                foreach ($data['product'] as $row) :
-                                    ?>
-                                    <tr>
-                                        <th scope="row"><?= $no++; ?></th>
-                                        <td><?= $row['name']; ?></td>
-                                        <!-- <td><?= $row['image']; ?></td> -->
-                                        <td><?= $row['description']; ?></td>
-                                        <td><?= $row['quantity']; ?></td>
-                                        <td><?= $row['price']; ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                <?php if (!empty($data['product'])) : ?>
+                                    <?php
+                                        $no = 1;
+                                        foreach ($data['product'] as $row) :
+                                            ?>
+                                        <tr>
+                                            <th scope="row"><?= $no++; ?></th>
+                                            <td><?= $row['name']; ?></td>
+                                            <td><img width="30%" src="uploads/<?= $row['image']; ?>" class="img-fluid" alt="Product Image"></td>
+                                            <td><?= $row['description']; ?></td>
+                                            <td><?= $row['quantity']; ?></td>
+                                            <td><?= $row['price']; ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -54,12 +56,12 @@
                             <label for="productname">Product Name</label>
                             <input type="text" class="form-control" id="productname" name="productname" id="productname">
                         </div>
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <div class="form-group mt-3">
                                 <label for="exampleFormControlFile1">Product Image</label>
                                 <input type="file" class="form-control-file" id="exampleFormControlFile1" name="productimage">
                             </div>
-                        </div> -->
+                        </div>
                         <div class="form-group mt-3">
                             <label for="exampleFormControlTextarea1">Description</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" id="description"></textarea>
