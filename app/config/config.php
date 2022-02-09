@@ -7,4 +7,4 @@ define('BASEULR', 'http://localhost/pos/public');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'post_db');
+define('DB_NAME', 'pos_db');

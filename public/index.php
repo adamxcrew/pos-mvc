@@ -1,1 +1,4 @@
-<h1>Hallo Selamat Pagi</h1>
+<?php
+require_once '../app/init.php';
+
+$app = new App();

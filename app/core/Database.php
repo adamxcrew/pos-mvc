@@ -7,71 +7,57 @@ class Database
     private $pass = DB_PASS;
     private $db_name = DB_NAME;
 
-    private $dbhandler;
-    private $stat;
 
     public function __construct()
     {
+        $host = $this->host;
+        $user = $this->user;
+        $password = $this->pass;
+        $dbname = $this->db_name;
+        return $this->conn = mysqli_connect($host, $user, $password, $dbname);
+    }
 
-        $conn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name;
-
-        $option = [
-            PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ];
-
-        try {
-            $this->dbhandler = new PDO($conn, $this->user, $this->pass, $option);
-        } catch (PDOException $e) {
-            die($e->getMessage());
+    public function getAll($sql)
+    {
+        $result = mysqli_query($this->conn, $sql);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        if (!empty($data)) {
+            return $data;
         }
     }
 
-    public function query($query)
+    public function getData($sql)
     {
-        $this->stat = $this->dbhandler->prepare($query);
+        $result = mysqli_query($this->conn, $sql);
+        return $result;
     }
 
-    public function bind($param, $value, $type = null)
+    public function getItemByID($id)
     {
-        if (is_null($type)) {
-            switch (true) {
-                case is_int($value):
-                    $type = PDO::PARAM_INT;
-                    break;
-                case is_bool($value):
-                    $type = PDO::PARAM_BOOL;
-                    break;
-                case is_null($value):
-                    $type = PDO::PARAM_NULL;
-                    break;
-                default:
-                    $type = PDO::PARAM_STR;
-            }
-        }
-        $this->stat->bindValue($param, $value, $type);
+        $sql = "SELECT * FROM tb_kategori WHERE idkategori=$id";
+        $result = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row;
     }
 
-    public function execute()
+    public function getItem($sql)
     {
-        $this->stat->execute();
+        $result = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row;
     }
 
-    public function resultSet()
+    public function rowCount($sql)
     {
-        $this->execute();
-        return $this->stat->fetchAll(PDO::FETCH_ASSOC);
+        $result = mysqli_query($this->conn, $sql);
+        $count = mysqli_num_rows($result);
+        return $count;
     }
 
-    public function single()
+    public function runSQL($sql)
     {
-        $this->execute();
-        return $this->stat->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function rowCount()
-    {
-        $this->execute();
-        return $this->stat->rowCount();
+        $result = mysqli_query($this->conn, $sql);
     }
 }
