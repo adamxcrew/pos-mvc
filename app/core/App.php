@@ -12,8 +12,6 @@ class App
         //controller
         if (@file_exists('../app/controller/' . $url[0] . '.php')) {
             $this->controller =  $url[0];
-            // var_dump($this->controller = $url[0]);
-            // exit;
             unset($url[0]);
         }
         require_once '../app/controller/' . $this->controller . '.php';
@@ -42,8 +40,6 @@ class App
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
-            // var_dump($url);
-            // exit;
             return $url;
         }
     }

@@ -15,12 +15,12 @@ class Product extends Controller
         if ($this->model('ProductModel')->addDataProduct($_POST) == true) {
             // echo "Berhasil";
             Flasher::setMessage('Sucess', 'added', 'success');
-            header('location: http://localhost/pos/public/product');
+            header('location: ' . BASEULR . '/product');
             exit;
         } else {
             // echo "Gagal";
             Flasher::setMessage('Sucess', 'added', 'success');
-            header('location: http://localhost/pos/public/product');
+            header('location: ' . BASEULR . '/product');
             exit;
         }
     }

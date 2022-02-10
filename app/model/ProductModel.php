@@ -45,14 +45,8 @@ class ProductModel
                 }
             }
         }
-        // return $image;
-
-        // echo "<pre>";
-        // var_dump($image);
-        // echo "<pre>";
-
-        // $sql = "INSERT INTO tb_product VALUES('','$productname','$desc',$qty,$price,'$date')";
-        // // $this->db->runSQL($sql);
-        // return $this->db->runSQL($sql);
     }
+
+    public function cartItem($data)
+    { }
 }

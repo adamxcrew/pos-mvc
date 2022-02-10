@@ -31,6 +31,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASEULR; ?>/pos">POS</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASEULR; ?>/auth/logout">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>

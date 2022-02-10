@@ -14,11 +14,12 @@ class Flasher
     {
         if (isset($_SESSION['msg'])) {
             echo '<div class="alert alert-' . $_SESSION['msg']['type'] . ' alert-dismissible fade show" role="alert">
-            Category Data <strong> ' . $_SESSION['msg']['message'] . ' </strong> ' . $_SESSION['msg']['action'] . '
+            <strong>' . $_SESSION['msg']['message'] . '</strong> 
+            ' . $_SESSION['msg']['action'] . '
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
-          </div>';
+            </div>';
             unset($_SESSION['msg']);
         }
     }
