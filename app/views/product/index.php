@@ -59,7 +59,8 @@
                         <div class="form-group">
                             <div class="form-group mt-3">
                                 <label for="exampleFormControlFile1">Product Image</label>
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="productimage">
+                                <input type="file" id="files" class="form-control-file" id="exampleFormControlFile1" name="productimage">
+                                <img width="50%" src="" alt="" id="image" class="mt-2">
                             </div>
                         </div>
                         <div class="form-group mt-3">
@@ -81,3 +82,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('files').onchange = function() {
+        let src = URL.createObjectURL(this.files[0]);
+        document.getElementById('image').src = src;
+    }
+</script>

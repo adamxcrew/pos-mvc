@@ -34,9 +34,8 @@ class Database
         return $result;
     }
 
-    public function getItemByID($id)
+    public function getItemByID($sql)
     {
-        $sql = "SELECT * FROM tb_kategori WHERE idkategori=$id";
         $result = mysqli_query($this->conn, $sql);
         $row = mysqli_fetch_assoc($result);
         return $row;
