@@ -38,11 +38,11 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover">
-                            <thead>
+                            <thead class="bg-secondary text-white">
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Action</th>
                                     <th scope="col">Price</th>
                                 </tr>
                             </thead>
@@ -55,12 +55,23 @@
                                         foreach ($_SESSION['cart'] as $key) :
                                             $subtotal = (int) $subtotal + $key['value'] * $key[0]['price'];
                                             $tax = 0.05 * $subtotal;
-                                            $total = $total + $subtotal - $tax;
+                                            $total = $total + $subtotal + $tax;
                                             ?>
                                         <tr>
                                             <th scope="row"><?= $no++; ?></th>
-                                            <td><?= $key[0]['name'] ?></td>
-                                            <td><?= $key['value'] ?></td>
+                                            <td>
+                                                <?= $key[0]['name'] ?>
+                                                <br>
+                                                <span class="qty"> Quantity : <?= $key['value'] ?></span>
+                                            </td>
+                                            <td>
+                                                <button class="btn-danger btn-sm">
+                                                    <i class="fas fa-trash" style='font-size:12px'></i>
+                                                </button>
+                                                <a class="btn-warning btn-sm reduce" data-id="<?= $key[0]['idproduct']; ?>">
+                                                    <i class="fas fa-minus text-white" style='font-size:12px'></i>
+                                                </a>
+                                            </td>
                                             <td><?= $key[0]['price'] ?></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -85,4 +96,3 @@
     </div>
 </div>
 </div>
-<script src="<?= BASEULR ?>/js/app.js"></script>

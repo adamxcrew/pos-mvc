@@ -18,6 +18,7 @@ class Pos extends Controller
         $data['product'] = $this->model('ProductModel')->getAllData();
         $this->view('templates/header');
         $this->view('pos/index', $data);
+        $this->view('templates/footer');
     }
 
     public function cart($id = '')
@@ -35,7 +36,7 @@ class Pos extends Controller
         $items = array_push($_SESSION['cart'][$this->id_product], $data);
 
 
-        // Service::show($_SESSION['cart']);
+        Service::show($_SESSION['cart']);
         // Service::show($items);
 
         // Opsi 2
@@ -52,7 +53,19 @@ class Pos extends Controller
         //     'qty' => 1
         // ];
 
-        header('location: ' . BASEULR . '/pos');
+        // header('location: ' . BASEULR . '/pos');
         exit;
+    }
+
+    public function decrement()
+    {
+        if (isset($_POST['id'])) {
+            $id = $_POST['id'];
+            $_SESSION['cart'][$id]['value'] -= 1;
+
+            if ($_SESSION['cart'][$id]['value'] == 0) {
+                unset($_SESSION['cart'][$id]);
+            }
+        }
     }
 }
