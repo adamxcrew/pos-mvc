@@ -84,8 +84,11 @@
 </div>
 
 <script>
-    document.getElementById('files').onchange = function() {
+    document.getElementById('files').onchange = function(e) {
+        console.log(this);
+        console.log(e);
         let src = URL.createObjectURL(this.files[0]);
+        console.log(src);
         document.getElementById('image').src = src;
     }
 </script>

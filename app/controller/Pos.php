@@ -3,6 +3,7 @@
 class Pos extends Controller
 {
     protected $id_product;
+    protected $cart;
 
     public function __construct()
     {
@@ -19,48 +20,35 @@ class Pos extends Controller
         $this->view('pos/index', $data);
     }
 
-    public function cart($id)
+    public function cart($id = '')
     {
-        $item = [];
+        // $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
         $this->id_product = $id;
-        $data = $this->model('ProductModel')->getItemById($this->id_product);
-        // array(2) {
-        //     ["idproduct"]=> string(1) "1"
-        //     ["name"]=> string(10) "Baju Erigo"
-        //     ["price"]=> string(6) "120000"
-        //   }
-        echo "<pre>";
-        var_dump($data);
-        echo "</pre>";
+        $data = $this->model('ProductModel')->getItemById($id);
 
-        if (isset($_SESSION['cart'][$this->id_product])) {
-            $_SESSION['cart'][$this->id_product]++;
+        if (isset($_SESSION['cart'])) {
+            $cart = $_SESSION['cart'];
         } else {
-            $_SESSION['cart'][$this->id_product] = 1;
+            $cart = [];
         }
-        $_SESSION['cart'];
-        for ($i = 0; $i < count($_SESSION['cart']); $i++) {
-            if ($_SESSION['cart'] == $data['idproduct']) {
-                $item[] = $data;
-                echo "<pre>";
-                var_dump($item);
-                echo "</pre>";
-            }
-        }
-        // array(1) {
-        //   [1]=>
-        //   int(2)
+
+        $cart[$id] = [
+            'idproduct' => $data['idproduct'],
+            'name' => $data['name'],
+            'price' => $data['price'],
+            'qty' => 1
+        ];
+
+        $_SESSION['cart'] = $cart;
+        // if (isset($_SESSION['cart'][$this->id_product])) {
+        //     $_SESSION['cart'][$this->id_product] += 1;
+        // } else {
+        //     $_SESSION['cart'][$this->id_product] = 1;
         // }
-        // array(1) {
-        //   [1]=>
-        //   int(2)
-        //   [2]=>
-        //   int(1) 
-        // }
-        echo "<pre>";
-        var_dump($_SESSION['cart']);
-        echo "</pre>";
+        Service::show($cart[$id]['idproduct']);
+        Service::show($cart[$id]);
+        // Service::show($_SESSION['cart']);
+        // header('location: ' . BASEULR . '/pos');
         exit;
-        header('location: ' . BASEULR . '/pos');
     }
 }
