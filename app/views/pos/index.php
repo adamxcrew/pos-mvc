@@ -65,9 +65,9 @@
                                                 <span class="qty"> Quantity : <?= $key['value'] ?></span>
                                             </td>
                                             <td>
-                                                <button class="btn-danger btn-sm">
+                                                <a class="btn-danger btn-sm delete" data-id="<?= $key[0]['idproduct']; ?>">
                                                     <i class="fas fa-trash" style='font-size:12px'></i>
-                                                </button>
+                                                </a>
                                                 <a class="btn-warning btn-sm reduce" data-id="<?= $key[0]['idproduct']; ?>">
                                                     <i class="fas fa-minus text-white" style='font-size:12px'></i>
                                                 </a>
