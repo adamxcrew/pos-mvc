@@ -26,29 +26,29 @@ class Pos extends Controller
         $this->id_product = $id;
         $data = $this->model('ProductModel')->getItemById($id);
 
-        if (isset($_SESSION['cart'])) {
-            $cart = $_SESSION['cart'];
+        if (isset($_SESSION['cart'][$this->id_product])) {
+            $_SESSION['cart'][$this->id_product]['value'] += 1;
         } else {
-            $cart = [];
+            $_SESSION['cart'][$this->id_product]['value'] = 1;
         }
 
-        $cart[$id] = [
-            'idproduct' => $data['idproduct'],
-            'name' => $data['name'],
-            'price' => $data['price'],
-            'qty' => 1
-        ];
+        $items = array_push($_SESSION['cart'][$this->id_product], $data);
 
-        $_SESSION['cart'] = $cart;
-        // if (isset($_SESSION['cart'][$this->id_product])) {
-        //     $_SESSION['cart'][$this->id_product] += 1;
-        // } else {
-        //     $_SESSION['cart'][$this->id_product] = 1;
-        // }
-        Service::show($cart[$id]['idproduct']);
-        Service::show($cart[$id]);
         // Service::show($_SESSION['cart']);
-        // header('location: ' . BASEULR . '/pos');
+        // Service::show($items);
+        // Opsi 2
+        // if (isset($_SESSION['cart'])) {
+        //     $cart = $_SESSION['cart'];
+        // } else {
+        //     $cart = [];
+        // }
+        // $cart[$id] = [
+        //     'idproduct' => $data['idproduct'],
+        //     'name' => $data['name'],
+        //     'price' => $data['price'],
+        //     'qty' => 1
+        // ];
+        header('location: ' . BASEULR . '/pos');
         exit;
     }
 }

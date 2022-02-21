@@ -21,7 +21,7 @@
                                     <img class="card-img-top" src="uploads/<?= $row['image']; ?>" alt="Card image cap">
                                     <div class="card-body">
                                         <h5 class="card-title"><?= $row['name']; ?></h5>
-                                        <a href="<?= BASEULR ?>/pos/cart/<?= $row['idproduct'] ?>" class="btn btn-primary" id="btnAdd">Add To Cart</a>
+                                        <a href="<?= BASEULR ?>/pos/cart/<?= $row['idproduct'] ?>" class="btn btn-primary">Add To Cart</a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -53,9 +53,9 @@
                                         foreach ($_SESSION['cart'] as $key) : ?>
                                         <tr>
                                             <th scope="row"><?= $no++; ?></th>
-                                            <td><?= $key['name'] ?></td>
-                                            <td><?= $key['qty'] ?></td>
-                                            <td><?= $key['price'] ?></td>
+                                            <td><?= $key[0]['name'] ?></td>
+                                            <td><?= $key['value'] ?></td>
+                                            <td><?= $key[0]['price'] ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
