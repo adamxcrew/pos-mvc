@@ -49,8 +49,14 @@
                             <tbody>
                                 <?php if (!empty($_SESSION['cart'])) : ?>
                                     <?php
+                                        $subtotal = 0;
+                                        $total = 0;
                                         $no = 1;
-                                        foreach ($_SESSION['cart'] as $key) : ?>
+                                        foreach ($_SESSION['cart'] as $key) :
+                                            $subtotal = (int) $subtotal + $key['value'] * $key[0]['price'];
+                                            $tax = 0.05 * $subtotal;
+                                            $total = $total + $subtotal - $tax;
+                                            ?>
                                         <tr>
                                             <th scope="row"><?= $no++; ?></th>
                                             <td><?= $key[0]['name'] ?></td>
@@ -58,17 +64,22 @@
                                             <td><?= $key[0]['price'] ?></td>
                                         </tr>
                                     <?php endforeach; ?>
-                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="card-footer">
                     <h5 class="card-title">Card Summary</h5>
-                    <p class="card-text">Sub Total : 250000 </p>
-                    <p class="card-text">Tax : 0 </p>
-                    <p class="card-text">Total : 0 </p>
+                    <p class="card-text">Sub Total : <?= $subtotal ?> </p>
+                    <p class="card-text">Tax : <span><?= $tax ?></span> </p>
+                    <p class="card-text">Total : <span><?= $total ?></span> </p>
+                    <div>
+                        <!-- <button class="btn btn-primary col-12">Add Tax</button>
+                        <button class="btn btn-danger col-12 mt-2">Remove Tax</button> -->
+                        <button class="btn btn-success col-12 mt-2">Save</button>
+                    </div>
                 </div>
+            <?php endif; ?>
             </div>
         </div>
     </div>

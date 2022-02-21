@@ -34,20 +34,24 @@ class Pos extends Controller
 
         $items = array_push($_SESSION['cart'][$this->id_product], $data);
 
+
         // Service::show($_SESSION['cart']);
         // Service::show($items);
+
         // Opsi 2
         // if (isset($_SESSION['cart'])) {
         //     $cart = $_SESSION['cart'];
         // } else {
         //     $cart = [];
         // }
+
         // $cart[$id] = [
         //     'idproduct' => $data['idproduct'],
         //     'name' => $data['name'],
         //     'price' => $data['price'],
         //     'qty' => 1
         // ];
+
         header('location: ' . BASEULR . '/pos');
         exit;
     }
