@@ -5,11 +5,6 @@
                 <div class="card-header">
                     <h3>Product List</h3>
                 </div>
-                <div class="col-sm-12">
-                    <?php
-                    Flasher::Message();
-                    ?>
-                </div>
                 <div class="card-body">
                     <div class="row">
                         <?php if (!empty($data['product'])) : ?>
@@ -34,6 +29,11 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Cart Product</h3>
+                    <div class="col">
+                        <?php
+                        Flasher::Message();
+                        ?>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

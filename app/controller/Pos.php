@@ -27,14 +27,25 @@ class Pos extends Controller
         $this->id_product = $id;
         $data = $this->model('ProductModel')->getItemById($id);
 
+
         if (isset($_SESSION['cart'][$this->id_product])) {
-            $_SESSION['cart'][$this->id_product]['value'] += 1;
+            if ($_SESSION['cart'][$this->id_product]['value'] == $data['quantity']) {
+                Flasher::setMessage('Quantity Cart Exceeds Stock', 'Wrong', 'danger');
+                header('location: ' . BASEULR . '/pos');
+                exit;
+            } else {
+                $_SESSION['cart'][$this->id_product]['value'] += 1;
+            }
         } else {
             $_SESSION['cart'][$this->id_product]['value'] = 1;
         }
 
-        $items = array_push($_SESSION['cart'][$this->id_product], $data);
-        // Service::show($items);
+
+
+        array_push($_SESSION['cart'][$this->id_product], $data);
+
+
+        Service::show($_SESSION['cart']);
         // Opsi 2
         // if (isset($_SESSION['cart'])) {
         //     $cart = $_SESSION['cart'];
@@ -49,7 +60,7 @@ class Pos extends Controller
         //     'qty' => 1
         // ];
 
-        header('location: ' . BASEULR . '/pos');
+        // header('location: ' . BASEULR . '/pos');
         exit;
     }
 
