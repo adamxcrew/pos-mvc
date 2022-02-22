@@ -3,9 +3,23 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3>Product List</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Product List</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- method="post" action="<?= BASEULR; ?>/pos/search" -->
+                            <form>
+                                <div class="form-group d-flex flex-row">
+                                    <input type="text" class="form-control" id="search" name="search" placeholder="Search" autocomplete="off">
+                                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                                    <a href="<?= BASEULR ?>/pos" class="btn btn-outline-danger">Reset</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="content">
                     <div class="row">
                         <?php if (!empty($data['product'])) : ?>
                             <?php
@@ -29,10 +43,12 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Cart Product</h3>
-                    <div class="col">
-                        <?php
-                        Flasher::Message();
-                        ?>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <?php
+                            Flasher::Message();
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -94,5 +110,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

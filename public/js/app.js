@@ -1,4 +1,21 @@
 $(document).ready(function () {
+
+    // search product
+    $('#search').on('keyup', function () {
+        console.log("ok");
+        $.ajax({
+            url: "http://localhost/pos/public/pos/search",
+            method: "POST",
+            data: {
+                search: $(this).val()
+            },
+            success: function (data) {
+                console.log(data);
+                $('#content').html(data);
+            }
+        })
+    });
+
     // reduce cart quantity
     $('.reduce').on('click', function () {
         const id = $(this).data('id')

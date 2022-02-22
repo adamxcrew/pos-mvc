@@ -40,12 +40,9 @@ class Pos extends Controller
             $_SESSION['cart'][$this->id_product]['value'] = 1;
         }
 
-
-
         array_push($_SESSION['cart'][$this->id_product], $data);
 
-
-        Service::show($_SESSION['cart']);
+        // Service::show($_SESSION['cart']);
         // Opsi 2
         // if (isset($_SESSION['cart'])) {
         //     $cart = $_SESSION['cart'];
@@ -60,7 +57,7 @@ class Pos extends Controller
         //     'qty' => 1
         // ];
 
-        // header('location: ' . BASEULR . '/pos');
+        header('location: ' . BASEULR . '/pos');
         exit;
     }
 
@@ -81,6 +78,17 @@ class Pos extends Controller
         if (isset($_POST['id'])) {
             $id = $_POST['id'];
             unset($_SESSION['cart'][$id]);
+        }
+    }
+
+    public function search()
+    {
+        if (isset($_POST['search'])) {
+            $data['product'] = $this->model('ProductModel')->search($_POST['search']);
+            echo json_encode($data);
+            // $this->view('templates/header');
+            // $this->view('pos/index', $data);
+            // $this->view('templates/footer');
         }
     }
 }

@@ -52,4 +52,10 @@ class ProductModel
         $sql = "SELECT p.idproduct, p.name, p.price, p.quantity FROM tb_product AS p WHERE p.idproduct = '$id'";
         return $this->db->getItemByID($sql);
     }
+
+    public function search($search)
+    {
+        $sql = "SELECT * FROM tb_product AS p WHERE p.name LIKE '%" . $search . "%'";
+        return $this->db->getAll($sql);
+    }
 }
