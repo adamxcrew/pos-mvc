@@ -1,13 +1,13 @@
-<div class="container-md mt-4">
+<div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <h3>Product List</h3>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <!-- method="post" action="<?= BASEULR; ?>/pos/search" -->
                             <form>
                                 <div class="form-group d-flex flex-row">
@@ -28,8 +28,9 @@
                                 <div class="card text-center mb-3" style="width: 17rem;">
                                     <img class="card-img-top mt-2" src="uploads/<?= $row['image']; ?>" style="object-fit: content; width:100%; height:130px" alt="Card image cap">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?= $row['name']; ?></h5>
-                                        <a href="<?= BASEULR ?>/pos/cart/<?= $row['idproduct'] ?>" class="btn btn-primary">Add To Cart</a>
+                                        <h5 class="card-title font-weight-bold"><?= $row['name']; ?></h5>
+                                        <h6 class="font-weight-bold" style="color: red;"><?= number_format($row['price'], 2, ',', '.')  ?></h6>
+                                        <a href="<?= BASEULR ?>/pos/cart/<?= $row['idproduct'] ?>" class="btn btn-primary">Add To Cart <i class="fas fa-cart-plus"></i> </a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -38,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="card">
                 <div class="card-header">
                     <h3>Cart Product</h3>
@@ -53,7 +54,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover">
-                            <thead class="bg-secondary text-white">
+                            <thead class="bg-primary text-white">
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Name</th>
@@ -66,11 +67,13 @@
                                     <?php
                                         $subtotal = 0;
                                         $total = 0;
+                                        $pricetotal = 0;
                                         $no = 1;
                                         foreach ($_SESSION['cart'] as $key) :
                                             $subtotal = (int) $subtotal + $key['value'] * $key[0]['price'];
                                             $tax = 0.05 * $subtotal;
                                             $total = $total + $subtotal + $tax;
+                                            $pricetotal = $key['value'] * $key[0]['price'];
                                             ?>
                                         <tr>
                                             <th scope="row"><?= $no++; ?></th>
@@ -78,6 +81,8 @@
                                                 <?= $key[0]['name'] ?>
                                                 <br>
                                                 <span class="qty"> Quantity : <?= $key['value'] ?></span>
+                                                <br>
+                                                <span>Price : <?= $key[0]['price'] ?></span>
                                             </td>
                                             <td>
                                                 <a class="btn-danger btn-sm delete" data-id="<?= $key[0]['idproduct']; ?>">
@@ -87,7 +92,7 @@
                                                     <i class="fas fa-minus text-white" style='font-size:12px'></i>
                                                 </a>
                                             </td>
-                                            <td>Rp<?= number_format($key[0]['price'], 2, ',', '.')  ?></td>
+                                            <td>Rp<?= number_format($pricetotal, 2, ',', '.')  ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                             </tbody>
@@ -102,7 +107,7 @@
                     <div>
                         <!-- <button class="btn btn-primary col-12">Add Tax</button>
                         <button class="btn btn-danger col-12 mt-2">Remove Tax</button> -->
-                        <button class="btn btn-success col-12 mt-2">Save</button>
+                        <button class="btn btn-success col-12 mt-2"><i class="fas fa-save "></i> Save </button>
                     </div>
                 </div>
             <?php endif; ?>
