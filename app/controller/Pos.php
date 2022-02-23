@@ -16,6 +16,10 @@ class Pos extends Controller
     public function index()
     {
         $data['product'] = $this->model('ProductModel')->getAllData();
+        // echo "<pre>";
+        // print_r($data);
+        // echo "</pre>";
+        // exit;
         $this->view('templates/header');
         $this->view('pos/index', $data);
         $this->view('templates/footer');
@@ -83,9 +87,11 @@ class Pos extends Controller
 
     public function search()
     {
+        $output = "";
         if (isset($_POST['search'])) {
-            $data['product'] = $this->model('ProductModel')->search($_POST['search']);
+            $data['product'] = ($this->model('ProductModel')->search($_POST['search']));
             echo json_encode($data);
+            // Service::show($data);
             // $this->view('templates/header');
             // $this->view('pos/index', $data);
             // $this->view('templates/footer');

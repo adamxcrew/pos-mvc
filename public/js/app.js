@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     // search product
     $('#search').on('keyup', function () {
-        console.log("ok");
+        // console.log("ok");
         $.ajax({
             url: "http://localhost/pos/public/pos/search",
             method: "POST",

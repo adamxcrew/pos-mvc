@@ -23,11 +23,10 @@
                     <div class="row">
                         <?php if (!empty($data['product'])) : ?>
                             <?php
-                                $no = 1;
                                 foreach ($data['product'] as $row) :
                                     ?>
                                 <div class="card text-center mb-3" style="width: 17rem;">
-                                    <img class="card-img-top" src="uploads/<?= $row['image']; ?>" alt="Card image cap">
+                                    <img class="card-img-top mt-2" src="uploads/<?= $row['image']; ?>" style="object-fit: content; width:100%; height:130px" alt="Card image cap">
                                     <div class="card-body">
                                         <h5 class="card-title"><?= $row['name']; ?></h5>
                                         <a href="<?= BASEULR ?>/pos/cart/<?= $row['idproduct'] ?>" class="btn btn-primary">Add To Cart</a>
@@ -88,7 +87,7 @@
                                                     <i class="fas fa-minus text-white" style='font-size:12px'></i>
                                                 </a>
                                             </td>
-                                            <td><?= $key[0]['price'] ?></td>
+                                            <td>Rp<?= number_format($key[0]['price'], 2, ',', '.')  ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                             </tbody>
@@ -97,9 +96,9 @@
                 </div>
                 <div class="card-footer">
                     <h5 class="card-title">Card Summary</h5>
-                    <p class="card-text">Sub Total : <?= $subtotal ?> </p>
-                    <p class="card-text">Tax : <span><?= $tax ?></span> </p>
-                    <p class="card-text">Total : <span><?= $total ?></span> </p>
+                    <p class="card-text">Sub Total : <?= number_format($subtotal, 2, ',', '.')  ?> </p>
+                    <p class="card-text">Tax : <span><?= number_format($tax, 2, ',', '.')  ?></span> </p>
+                    <p class="card-text">Total : <span><?= number_format($total, 2, ',', '.')  ?></span> </p>
                     <div>
                         <!-- <button class="btn btn-primary col-12">Add Tax</button>
                         <button class="btn btn-danger col-12 mt-2">Remove Tax</button> -->
