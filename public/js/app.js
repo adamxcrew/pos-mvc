@@ -47,4 +47,13 @@ $(document).ready(function () {
         })
     });
 
+    // user payment
+    // $.fn.paymentUser = function () {
+    //     const payment = $('#payment').value;
+    //     const total = $('#total').value;
+
+    //     const receipt = payment - total;
+    //     console.log(receipt);
+    // }
 });
+
