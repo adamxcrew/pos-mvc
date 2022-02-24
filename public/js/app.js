@@ -48,12 +48,16 @@ $(document).ready(function () {
     });
 
     // user payment
-    // $.fn.paymentUser = function () {
-    //     const payment = $('#payment').value;
-    //     const total = $('#total').value;
+    $('#payment').on('input', function () {
+        const payment = ($('#payment').val());
+        const total = ($('#total').val());
 
-    //     const receipt = payment - total;
-    //     console.log(receipt);
-    // }
+        const receipt = payment - total;
+        $('#receipt').html(receipt);
+
+        if (payment == null || payment == "") {
+            $('#receipt').html(`Rp. 0`);
+        }
+    })
 });
 

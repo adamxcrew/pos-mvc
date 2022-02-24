@@ -1,6 +1,6 @@
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
                     <h3>Cart Product</h3>
@@ -125,16 +125,16 @@
 </div>
 
 <script>
-    payment.oninput = () => {
-        const payment = document.getElementById('payment').value;
-        const total = document.getElementById('total').value;
-        const receipt = payment - total;
-        console.log(receipt);
-        document.getElementById('receipt').innerHTML = receipt;
+    // payment.oninput = () => {
+    //     const payment = document.getElementById('payment').value;
+    //     const total = document.getElementById('total').value;
+    //     const receipt = payment - total;
+    //     console.log(receipt);
+    //     document.getElementById('receipt').innerHTML = receipt;
 
-        if (payment == null || payment == "") {
-            document.getElementById('receipt').innerHTML = `Rp. 0`;
-        }
+    //     if (payment == null || payment == "") {
+    //         document.getElementById('receipt').innerHTML = `Rp. 0`;
+    //     }
 
-    }
+    // }
 </script>
