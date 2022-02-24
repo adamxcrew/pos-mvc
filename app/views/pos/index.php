@@ -100,41 +100,29 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <h5 class="card-title">Card Summary</h5>
-                    <p class="card-text">Sub Total : <?= number_format($subtotal, 2, ',', '.')  ?> </p>
-                    <p class="card-text">Tax : <span><?= number_format($tax, 2, ',', '.')  ?></span> </p>
-                    <p class="card-text">Total : <span><?= number_format($total, 2, ',', '.')  ?></span> </p>
-                    <div>
-                        <!-- <button class="btn btn-primary col-12">Add Tax</button>
-                        <button class="btn btn-danger col-12 mt-2">Remove Tax</button> -->
-                        <button class="btn btn-success col-12 mt-2"><i class="fas fa-save "></i> Save </button>
-                    </div>
-                    <div class="form-group mt-3">
-                        <input type="number" class="form-control mb-3" id="payment" placeholder="Input Customer Payment Amount" min=1>
-                        <input type="hidden" id="total" value="<?= $total ?>">
-                        <!-- <span>Payment : </span>
-                        <h4 class="font-weight-bold mb-3">Rp 120.000,00</h4> -->
-                        <span>Receipt : </span>
-                        <h4 class="font-weight-bold text-info" id="receipt"> Rp. 0 </h4>
-                    </div>
+                    <form action="">
+                        <h5 class="card-title">Card Summary</h5>
+                        <p class="card-text"> Sub Total : <span id="subTotal"> <?= ($subtotal)  ?></span> </p>
+                        <!-- <p class="card-text">Tax : <span><?= number_format($tax, 2, ',', '.')  ?></span> </p> -->
+                        <p class="card-text"> Tax : <span id="tax">Rp. 0</span></p>
+                        <p class="card-text">Total : <span id="totalAll"><?= number_format($subtotal, 2, ',', '.')  ?></span> </p>
+                        <div>
+                            <button class="btn btn-primary col-12 addtax">Add Tax</button>
+                            <button class="btn btn-danger col-12 mt-2 removetax">Remove Tax</button>
+                            <button class="btn btn-success col-12 mt-2" id="btnSave" disabled><i class="fas fa-save "></i> Save </button>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="number" class="form-control mb-3" id="payment" placeholder="Input Customer Payment Amount" min=1>
+                            <input type="hidden" id="total" value="<?= $total ?>">
+                            <span>Payment : </span>
+                            <h4 class="font-weight-bold mb-3 text-warning" id="paymentText">Rp. 0</h4>
+                            <span>Receipt : </span>
+                            <h4 class="font-weight-bold text-info" id="receipt"> Rp. 0 </h4>
+                        </div>
+                    </form>
                 </div>
             <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    // payment.oninput = () => {
-    //     const payment = document.getElementById('payment').value;
-    //     const total = document.getElementById('total').value;
-    //     const receipt = payment - total;
-    //     console.log(receipt);
-    //     document.getElementById('receipt').innerHTML = receipt;
-
-    //     if (payment == null || payment == "") {
-    //         document.getElementById('receipt').innerHTML = `Rp. 0`;
-    //     }
-
-    // }
-</script>
