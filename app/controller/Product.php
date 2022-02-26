@@ -20,12 +20,10 @@ class Product extends Controller
     public function create()
     {
         if ($this->model('ProductModel')->addDataProduct($_POST) == true) {
-            // echo "Berhasil";
             // Flasher::setMessage('Sucess', 'added', 'success');
             header('location: ' . BASEULR . '/product');
             exit;
         } else {
-            // echo "Gagal";
             Flasher::setMessage('Sucess', 'added', 'success');
             header('location: ' . BASEULR . '/product');
             exit;

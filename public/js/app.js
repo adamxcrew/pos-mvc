@@ -48,27 +48,26 @@ $(document).ready(function () {
     });
 
     // Add Tax
-    $('.addtax').on('click', function (e) {
-        e.preventDefault();
+    // $('.addtax').on('click', function (e) {
+    //     e.preventDefault();
 
-        let subTotal = $("#subTotal").text();
-        let tax = 0.05 * subTotal;
-        let total = parseInt(tax) + parseInt(subTotal);
-        $("#tax").text(tax);
-        $("#totalAll").text(rupiah(total));
+    //     let subTotal = $("#subTotal").text();
+    //     let tax = 0.05 * subTotal;
+    //     let total = parseInt(tax) + parseInt(subTotal);
+    //     $("#tax").text(tax);
+    //     $("#totalAll").text(rupiah(total));
 
-    });
+    // });
 
     // Remove Tax
-    $('.removetax').on('click', function (e) {
-        e.preventDefault()
-        $('#tax').text('Rp. 0');
-        let subTotal = $("#subTotal").text();
-        let tax = 0.05 * subTotal;
-        let total = parseInt(tax) + parseInt(subTotal);
-        let AllTotal = parseInt(total) - parseInt(tax)
-        let totalAll = $("#totalAll").text(rupiah(AllTotal));
-    });
+    // $('.removetax').on('click', function (e) {
+    //     e.preventDefault()
+    //     $('#tax').text('Rp. 0');
+    //     let subTotal = $("#subTotal").text();
+    //     let tax = 0.05 * subTotal;
+    //     let total = parseInt(tax) + parseInt(subTotal);
+    //     $("#totalAll").text(rupiah(subTotal));
+    // });
 
     // User Payment
     $('#payment').on('input', function () {
@@ -105,6 +104,12 @@ $(document).ready(function () {
         }
         return split[1] != undefined ? rupiah + ',' + split[1] : rupiah
     }
+
+    // Get data form payment
+    // $('#btnSave').on('click', function (e) {
+    //     e.preventDefault();
+
+    // })
 
 });
 

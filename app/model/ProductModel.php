@@ -58,4 +58,15 @@ class ProductModel
         $sql = "SELECT * FROM tb_product AS p WHERE p.name LIKE '%" . $search . "%'";
         return $this->db->getAll($sql);
     }
+
+    public function transaction($id, $qty)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tb_product SET quantity = $qty WHERE idproduct= '$id'";
+            return $this->db->runSQL($sql);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

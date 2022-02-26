@@ -16,10 +16,6 @@ class Pos extends Controller
     public function index()
     {
         $data['product'] = $this->model('ProductModel')->getAllData();
-        // echo "<pre>";
-        // print_r($data);
-        // echo "</pre>";
-        // exit;
         $this->view('templates/header');
         $this->view('pos/index', $data);
         $this->view('templates/footer');
@@ -27,10 +23,8 @@ class Pos extends Controller
 
     public function cart($id = '')
     {
-        // $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
         $this->id_product = $id;
         $data = $this->model('ProductModel')->getItemById($id);
-
 
         if (isset($_SESSION['cart'][$this->id_product])) {
             if ($_SESSION['cart'][$this->id_product]['value'] == $data['quantity']) {
@@ -91,10 +85,45 @@ class Pos extends Controller
         if (isset($_POST['search'])) {
             $data['product'] = ($this->model('ProductModel')->search($_POST['search']));
             echo json_encode($data);
-            // Service::show($data);
-            // $this->view('templates/header');
-            // $this->view('pos/index', $data);
-            // $this->view('templates/footer');
+        }
+    }
+
+    public function payment()
+    {
+        if (isset($_SESSION['cart'])) {
+            $payment = $_POST['payment'];
+            exit(Service::show($payment));
+            $item = $_SESSION['cart'];
+            // get session
+            foreach ($item as $row) {
+                $data = [
+                    'value' => $row['value'],
+                    'idproduct' => $row[0]['idproduct']
+                ];
+                $dataIdentf[] = $data;
+            }
+            // Service::show($dataIdentf);
+            // get data cart
+            for ($i = 0; $i < count($dataIdentf); $i++) {
+                $id = $dataIdentf[$i]['idproduct'];
+                $product[] = $this->model('ProductModel')->getItemById($id);
+            }
+            // Service::show($product);
+
+            // update qyt
+            for ($i = 0; $i < count($dataIdentf) + 1; $i++) {
+                if ($dataIdentf[$i]['value'] < $product[$i]['quantity']) {
+                    // decrement qty product
+                    $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
+                    $this->model('ProductModel')->transaction($product[$i]['idproduct'], $qty);
+                    unset($_SESSION['cart'][$product[$i]['idproduct']]);
+                } else {
+                    header('location: ' . BASEULR . '/pos');
+                    exit;
+                }
+            }
+            // Service::show($products['product'][0]);
+            $product = $this->model('ProductModel')->transaction($data);
         }
     }
 }
