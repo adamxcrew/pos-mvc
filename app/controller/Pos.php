@@ -109,23 +109,20 @@ class Pos extends Controller
                 $product[] = $this->model('ProductModel')->getItemById($id);
             }
 
-            // Service::show($dataIdentf);
-            // Service::show($product);
-
             // Add into tb_transaction
             $payment = $_POST['payment'];
             $userid = $_SESSION['iduser'];
             for ($i = 0; $i < count($dataIdentf); $i++) {
                 $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
+
+                // Add tb_product_transaction
+                $this->model('ProductModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
             }
             $this->model('ProductModel')->transaction($userid, $payment, $total);
 
             // update qyt, add into tb_transaction
             for ($i = 0; $i < count($dataIdentf) + 1; $i++) {
                 if ($dataIdentf[$i]['value'] < $product[$i]['quantity']) {
-
-                    // Add tb_product_transaction
-                    $this->model('ProductModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
 
                     // update qty on tb_product
                     $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
