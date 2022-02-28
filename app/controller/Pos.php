@@ -116,9 +116,9 @@ class Pos extends Controller
                 $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
 
                 // Add tb_product_transaction
-                $this->model('ProductModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
+                $this->model('TransactionModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
             }
-            $this->model('ProductModel')->transaction($userid, $payment, $total);
+            $this->model('TransactionModel')->transaction($userid, $payment, $total);
 
             // update qyt, add into tb_transaction
             for ($i = 0; $i < count($dataIdentf) + 1; $i++) {
