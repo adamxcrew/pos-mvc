@@ -15,6 +15,7 @@ class Product extends Controller
 
         $this->view('templates/header');
         $this->view('product/index', $data);
+        $this->view('templates/footer');
     }
 
     public function create()
@@ -26,6 +27,19 @@ class Product extends Controller
         } else {
             Flasher::setMessage('Sucess', 'added', 'success');
             header('location: ' . BASEULR . '/product');
+            exit;
+        }
+    }
+
+    public function delete($id)
+    {
+        if ($this->model('ProductModel')->delete($id) == true) {
+            Flasher::setMessage('succeed', 'deleted', 'success');
+            header('Location: ' . BASEULR . '/product');
+            exit;
+        } else {
+            Flasher::setMessage('failed', 'deleted', 'danger');
+            header('Location: ' . BASEULR . '/pos');
             exit;
         }
     }

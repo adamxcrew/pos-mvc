@@ -48,6 +48,12 @@ class ProductModel
         }
     }
 
+    public function delete($id)
+    {
+        $sql = "DELETE FROM tb_product WHERE idproduct= $id";
+        return $this->db->runSQL($sql);
+    }
+
     public function getItemById($id)
     {
         $sql = "SELECT p.idproduct, p.name, p.price, p.quantity FROM tb_product AS p WHERE p.idproduct = '$id'";

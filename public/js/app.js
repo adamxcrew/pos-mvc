@@ -111,5 +111,23 @@ $(document).ready(function () {
 
     // })
 
+    // Form Edit Data
+    $(".edit_data").on('click', function () {
+        $("#modalTitle").html('Edit Data');
+    });
+
+    $(".delete_data").on('click', function () {
+        const id = $(this).data('id')
+        $.ajax({
+            url: 'http://localhost/pos/public/product/delete',
+            data: { id: id },
+            method: "post",
+            // dataType: 'json',
+            success: function (data) {
+                // location.reload();
+            }
+        })
+    })
+
 });
 
