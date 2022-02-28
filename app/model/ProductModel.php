@@ -59,7 +59,7 @@ class ProductModel
         return $this->db->getAll($sql);
     }
 
-    public function transaction($id, $qty)
+    public function updateQty($id, $qty)
     {
         try {
             //code...
@@ -68,5 +68,14 @@ class ProductModel
         } catch (\Throwable $th) {
             //throw $th;
         }
+    }
+
+    public function transaction($iduser, $payment, $total)
+    {
+        $Id = 1;
+        $invoe = 'T' . date('y') . date('m') . str_pad($Id, 3, '0', STR_PAD_LEFT);
+        $date = date('Y-m-d');
+        $sql = "INSERT INTO tb_transaction VALUES ('$invoe', $iduser, $payment, $total, '$date')";
+        return $this->db->runSQL($sql);
     }
 }

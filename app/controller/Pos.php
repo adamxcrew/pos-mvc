@@ -5,6 +5,7 @@ class Pos extends Controller
     protected $id_product;
     protected $cart;
 
+
     public function __construct()
     {
         if (($_SESSION['session_login'] != 'Login')) {
@@ -91,8 +92,7 @@ class Pos extends Controller
     public function payment()
     {
         if (isset($_SESSION['cart'])) {
-            $payment = $_POST['payment'];
-            exit(Service::show($payment));
+
             $item = $_SESSION['cart'];
             // get session
             foreach ($item as $row) {
@@ -102,28 +102,48 @@ class Pos extends Controller
                 ];
                 $dataIdentf[] = $data;
             }
-            // Service::show($dataIdentf);
+            // Array
+            // (
+            //     [0] => Array
+            //         (
+            //             [value] => 1
+            //             [idproduct] => 3
+            //         )
+            // )
+
             // get data cart
             for ($i = 0; $i < count($dataIdentf); $i++) {
                 $id = $dataIdentf[$i]['idproduct'];
                 $product[] = $this->model('ProductModel')->getItemById($id);
             }
+
+            // Service::show($dataIdentf);
+            // Service::show($product);
+            // exit;
+
+            // Add into tb_transaction
+            $payment = $_POST['payment'];
+            $userid = $_SESSION['iduser'];
+
             // Service::show($product);
 
-            // update qyt
+            // update qyt, add into tb_transaction
             for ($i = 0; $i < count($dataIdentf) + 1; $i++) {
                 if ($dataIdentf[$i]['value'] < $product[$i]['quantity']) {
-                    // decrement qty product
+                    // Add into tb_transaction
+                    $total = $dataIdentf[$i]['value'] * $product[$i]['price'];
+                    $this->model('ProductModel')->transaction($userid, $payment, $total);
+                    exit;
+
+                    // update qty on tb_product
                     $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
-                    $this->model('ProductModel')->transaction($product[$i]['idproduct'], $qty);
+                    $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
                     unset($_SESSION['cart'][$product[$i]['idproduct']]);
                 } else {
                     header('location: ' . BASEULR . '/pos');
                     exit;
                 }
             }
-            // Service::show($products['product'][0]);
-            $product = $this->model('ProductModel')->transaction($data);
         }
     }
 }

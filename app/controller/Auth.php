@@ -14,6 +14,7 @@ class Auth extends Controller
         if ($row == true) {
             $data = $this->model('LoginModel')->checkLogin($_POST);
             $_SESSION['session_login'] = 'Login';
+            $_SESSION['iduser'] = $data[0]['iduser'];
             $_SESSION['username'] = $data[0]['name'];
             header('location: ' . BASEULR . '/home');
             exit;
