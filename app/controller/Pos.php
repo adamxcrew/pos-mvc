@@ -92,7 +92,7 @@ class Pos extends Controller
     public function payment()
     {
         if (isset($_SESSION['cart'])) {
-
+            $total = 0;
             $item = $_SESSION['cart'];
             // get session
             foreach ($item as $row) {
@@ -102,14 +102,6 @@ class Pos extends Controller
                 ];
                 $dataIdentf[] = $data;
             }
-            // Array
-            // (
-            //     [0] => Array
-            //         (
-            //             [value] => 1
-            //             [idproduct] => 3
-            //         )
-            // )
 
             // get data cart
             for ($i = 0; $i < count($dataIdentf); $i++) {
@@ -119,21 +111,21 @@ class Pos extends Controller
 
             // Service::show($dataIdentf);
             // Service::show($product);
-            // exit;
 
             // Add into tb_transaction
             $payment = $_POST['payment'];
             $userid = $_SESSION['iduser'];
-
-            // Service::show($product);
+            for ($i = 0; $i < count($dataIdentf); $i++) {
+                $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
+            }
+            $this->model('ProductModel')->transaction($userid, $payment, $total);
 
             // update qyt, add into tb_transaction
             for ($i = 0; $i < count($dataIdentf) + 1; $i++) {
                 if ($dataIdentf[$i]['value'] < $product[$i]['quantity']) {
-                    // Add into tb_transaction
-                    $total = $dataIdentf[$i]['value'] * $product[$i]['price'];
-                    $this->model('ProductModel')->transaction($userid, $payment, $total);
-                    exit;
+
+                    // Add tb_product_transaction
+                    $this->model('ProductModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
 
                     // update qty on tb_product
                     $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];

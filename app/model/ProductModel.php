@@ -4,6 +4,7 @@ class ProductModel
 {
     private $table = 'tb_product';
     private $db;
+    private $invoe;
 
     public function __construct()
     {
@@ -72,10 +73,33 @@ class ProductModel
 
     public function transaction($iduser, $payment, $total)
     {
-        $Id = 1;
-        $invoe = 'T' . date('y') . date('m') . str_pad($Id, 3, '0', STR_PAD_LEFT);
+        $row = $this->getLastInvoice();
+        $number = substr($row['invoice_number'], 7);
         $date = date('Y-m-d');
-        $sql = "INSERT INTO tb_transaction VALUES ('$invoe', $iduser, $payment, $total, '$date')";
+        if ($this->getLastInvoice() == null) {
+            $this->invoe = 'T' . date('y') . date('m') . str_pad(1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $this->invoe = 'T' . date('y') . date('m') . str_pad($number + 1, 3, '0', STR_PAD_LEFT);
+        }
+        $sql = "INSERT INTO tb_transaction VALUES ('$this->invoe', $iduser, $payment, $total, '$date')";
         return $this->db->runSQL($sql);
     }
+
+    private function getLastInvoice()
+    {
+        $query = "SELECT * FROM tb_transaction ORDER BY invoice_number DESC LIMIT 1";
+        return $this->db->getItem($query);
+    }
+
+    public function addTransactionProduct($idproduct, $qty)
+    {
+        $date = date('Y-m-d');
+        $sql = "INSERT INTO tb_product_transaction VALUES ('','$idproduct','$this->invoe', $qty, '$date')";
+        // Service::show($sql);
+        // exit;
+        return $this->db->runSQL($sql);
+    }
+
+    private function generateInvoice()
+    { }
 }
