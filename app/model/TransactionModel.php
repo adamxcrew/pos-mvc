@@ -9,6 +9,12 @@ class TransactionModel
         $this->db = new Database();
     }
 
+    public function getTransaction()
+    {
+        $sql = "SELECT * FROM tb_transaction";
+        return $this->db->getAll($sql);
+    }
+
     public function transaction($iduser, $payment, $total)
     {
         $date = date('Y-m-d');

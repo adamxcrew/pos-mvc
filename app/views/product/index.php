@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group mt-3">
                             <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" id="quantity" name="quantity" id="qty">
+                            <input type="number" class="form-control" id="quantity" name="quantity" id="qty" min=1>
                         </div>
                         <div class="form-group mt-3">
                             <label for="price">Price</label>
