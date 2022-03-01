@@ -20,7 +20,7 @@ class TransactionModel
         $date = date('Y-m-d');
         $invoice = $this->generateInvoice();
 
-        $sql = "INSERT INTO tb_transaction VALUES ('$invoice', $iduser, $payment, $total, '$date')";
+        $sql = "INSERT INTO tb_transaction VALUES ('','$invoice', $iduser, $payment, $total, '$date')";
         return $this->db->runSQL($sql);
     }
 
@@ -48,5 +48,14 @@ class TransactionModel
             $invoe = 'T' . date('y') . date('m') . str_pad($number + 1, 3, '0', STR_PAD_LEFT);
         }
         return $invoe;
+    }
+
+    public function getDataByID($id)
+    {
+        $sql = "SELECT p.name, p.description, p.price, tr.quantity FROM tb_product AS p
+        INNER JOIN tb_product_transaction AS tr ON tr.idproduct = p.idproduct
+        INNER JOIN tb_transaction AS t ON t.invoice_number = tr.invoice_number
+        WHERE t.id_transaction = $id";
+        return $this->db->getAll($sql);
     }
 }

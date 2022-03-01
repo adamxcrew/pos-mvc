@@ -116,16 +116,44 @@ $(document).ready(function () {
         $("#modalTitle").html('Edit Data');
     });
 
-    $(".delete_data").on('click', function () {
-        const id = $(this).data('id')
+    // $(".delete_data").on('click', function () {
+    //     const id = $(this).data('id')
+    //     $.ajax({
+    //         url: 'http://localhost/pos/public/product/delete',
+    //         data: { id: id },
+    //         method: "post",
+    //         // dataType: 'json',
+    //         success: function (data) {
+    //             // location.reload();
+    //         }
+    //     })
+    // })
+
+    $(".trans_details").on('click', function () {
+        const id = $(this).data('id');
+        // console.log(id);
         $.ajax({
-            url: 'http://localhost/pos/public/product/delete',
+            url: 'http://localhost/pos/public/transactions/getItem',
             data: { id: id },
             method: "post",
             // dataType: 'json',
             success: function (data) {
-                // location.reload();
+                const items = JSON.parse(data);
+                for (const item in items) {
+                    console.log(items[item])
+                    $("#list_transaction").append(`
+                    <tr>
+                    <td>`+ items[item].name + `</td>
+                    <td>`+ items[item].description + `</td>
+                    <td>`+ items[item].price + `</td>
+                    <td>`+ items[item].quantity + `</td>
+                    <td>`+ items[item].price * items[item].quantity + `</td>
+                    </tr>
+                    `)
+                }
+                // $("#list_transaction").hide();
             }
+
         })
     })
 

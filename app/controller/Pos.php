@@ -99,7 +99,6 @@ class Pos extends Controller
             $userid = $_SESSION['iduser'];
             for ($i = 0; $i < count($dataIdentf); $i++) {
                 $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
-
                 // Add tb_product_transaction
                 $this->model('TransactionModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
             }
