@@ -77,6 +77,8 @@ class Pos extends Controller
     public function payment()
     {
         if (isset($_SESSION['cart'])) {
+            $tax = $_POST['tax'];
+            // exit(Service::show($tax));
             $total = 0;
             $item = $_SESSION['cart'];
             // get session
@@ -98,7 +100,7 @@ class Pos extends Controller
             $payment = $_POST['payment'];
             $userid = $_SESSION['iduser'];
             for ($i = 0; $i < count($dataIdentf); $i++) {
-                $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
+                $total = $total + $tax + $dataIdentf[$i]['value'] * $product[$i]['price'];
                 // Add tb_product_transaction
                 $this->model('TransactionModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
             }

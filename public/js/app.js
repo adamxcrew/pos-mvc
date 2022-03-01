@@ -131,6 +131,7 @@ $(document).ready(function () {
 
     $(".trans_details").on('click', function () {
         const id = $(this).data('id');
+        const tax = 0.05;
         // console.log(id);
         $.ajax({
             url: 'http://localhost/pos/public/transactions/getItem',
@@ -141,14 +142,14 @@ $(document).ready(function () {
                 const items = JSON.parse(data);
                 $("#list_transaction").empty();
                 for (const item in items) {
-                    console.log(items[item])
+                    const total = parseInt(items[item].price) + items[item].price * tax
                     $("#list_transaction").append(`
                     <tr>
                     <td>`+ items[item].name + `</td>
                     <td>`+ items[item].description + `</td>
-                    <td>`+ items[item].price + `</td>
                     <td>`+ items[item].quantity + `</td>
-                    <td>`+ items[item].price * items[item].quantity + `</td>
+                    <td>`+ items[item].price + `</td>
+                    <td>`+ total + `</td>
                     </tr>
                     `)
                 }

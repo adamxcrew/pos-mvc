@@ -104,6 +104,7 @@
                         <h5 class="card-title">Card Summary</h5>
                         <p class="card-text"> Sub Total : <span id="subTotal"> <?= ($subtotal)  ?></span> </p>
                         <p class="card-text">Tax : <span><?= number_format($tax, 2, ',', '.')  ?></span> </p>
+                        <input type="hidden" value="<?= $tax ?>" name="tax">
                         <!-- <p class="card-text"> Tax : <span id="tax">Rp. 0</span></p> -->
                         <p class="card-text">Total : <span id="totalAll"><?= number_format($total, 2, ',', '.')  ?></span> </p>
                         <div>

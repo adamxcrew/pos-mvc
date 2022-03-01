@@ -28,12 +28,6 @@ class Database
         }
     }
 
-    public function getData($sql)
-    {
-        $result = mysqli_query($this->conn, $sql);
-        return $result;
-    }
-
     public function getItemByID($sql)
     {
         $result = mysqli_query($this->conn, $sql);
