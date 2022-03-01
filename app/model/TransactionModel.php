@@ -58,4 +58,22 @@ class TransactionModel
         WHERE t.id_transaction = $id";
         return $this->db->getAll($sql);
     }
+
+    public function deleteData($id)
+    {
+        $sql = "DELETE FROM tb_transaction WHERE id_transaction = $id";
+        return $this->db->runSQL($sql);
+    }
+
+    public function invoiceNumber($id)
+    {
+        $sql = "SELECT invoice_number FROM tb_transaction WHERE id_transaction = $id";
+        return $this->db->getItem($sql);
+    }
+
+    public function deleteProductTransaction($invoice)
+    {
+        $sql = "DELETE FROM tb_product_transaction WHERE invoice_number IN('$invoice')";
+        return $this->db->runSQL($sql);
+    }
 }

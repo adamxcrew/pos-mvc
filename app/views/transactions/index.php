@@ -10,7 +10,7 @@
                             <th scope="col">Invoice Number</th>
                             <th scope="col">Total</th>
                             <th scope="col">Payment</th>
-                            <th scope="col">Detail</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,6 +23,7 @@
                                     <td><?= $row['payment'] ?></td>
                                     <td>
                                         <button type="button" data-id="<?= $row['id_transaction'] ?>" class="badge bg-primary trans_details" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
+                                        <a style="text-decoration:none;" href="<?= BASEULR; ?>/transactions/delete/<?= $row['id_transaction'] ?>" class="badge bg-danger" onclick="return confirm('delete?')">Delete</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
