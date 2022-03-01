@@ -139,6 +139,7 @@ $(document).ready(function () {
             // dataType: 'json',
             success: function (data) {
                 const items = JSON.parse(data);
+                $("#list_transaction").empty();
                 for (const item in items) {
                     console.log(items[item])
                     $("#list_transaction").append(`
@@ -151,7 +152,6 @@ $(document).ready(function () {
                     </tr>
                     `)
                 }
-                // $("#list_transaction").hide();
             }
 
         })
