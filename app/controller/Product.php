@@ -53,6 +53,13 @@ class Product extends Controller
 
     public function delete($id)
     {
+        $data = $this->model('ProductModel')->getItem($id);
+        $imagepath = "uploads/";
+        $filename = $imagepath . $data['image'];
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
+        // exit(Service::show($data['image']));
         if ($this->model('ProductModel')->delete($id) == true) {
             Flasher::setMessage('succeed', 'deleted', 'success');
             header('Location: ' . BASEULR . '/product');
@@ -67,7 +74,6 @@ class Product extends Controller
     public function deletemultiple()
     {
         $id = $_POST['id'];
-        $qty = count($id, true);
         // exit(Service::show($id));
         if ($this->model('ProductModel')->multipledelete($id) == true) {
             header('Location: ' . BASEULR . '/product');
