@@ -37,6 +37,20 @@ class Product extends Controller
         echo json_encode($this->model('ProductModel')->getItem($id));
     }
 
+    public function editdata()
+    {
+        // exit(Service::show($this->model('ProductModel')->edit($_POST)));
+        if ($this->model('ProductModel')->edit($_POST) == true) {
+            // Flasher::setMessage('Sucess', 'added', 'success');
+            header('location: ' . BASEULR . '/product');
+            exit;
+        } else {
+            // Flasher::setMessage('Sucess', 'added', 'success');
+            header('location: ' . BASEULR . '/product');
+            exit;
+        }
+    }
+
     public function delete($id)
     {
         if ($this->model('ProductModel')->delete($id) == true) {

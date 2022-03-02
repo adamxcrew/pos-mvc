@@ -82,4 +82,18 @@ class ProductModel
             //throw $th;
         }
     }
+
+    public function edit($data)
+    {
+        $id = $data['id'];
+        $name = $data['productnamemodal'];
+        $desc = $data['descriptionmodal'];
+        $qty = $data['quantitymodal'];
+        $price = $data['pricemodal'];
+
+        $sql = "UPDATE tb_product
+        SET name = '$name', description = '$desc', quantity = $qty, price = $price
+        WHERE idproduct = $id";
+        return $this->db->runSQL($sql);
+    }
 }

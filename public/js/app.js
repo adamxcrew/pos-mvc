@@ -114,6 +114,7 @@ $(document).ready(function () {
     // Form Edit Data
     $(".edit_data").on('click', function () {
 
+        $(".modal-body form").attr('action', 'http://localhost/pos/public/product/editdata')
         $("#modalTitle").html('Edit Data');
         const id = $(this).data('id');
 
@@ -129,6 +130,7 @@ $(document).ready(function () {
                 $("#descriptionmodal").val(data.description)
                 $("#qtymodal").val(data.quantity)
                 $("#pricemodal").val(data.price)
+                $("#id").val(data.idproduct)
             }
         })
     });

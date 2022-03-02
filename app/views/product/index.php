@@ -100,6 +100,7 @@
             </div>
             <div class="modal-body">
                 <form action="" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" id="id" name="id">
                     <div class="form-group mt-3">
                         <label for="productname">Product Name</label>
                         <input type="text" class="form-control" name="productnamemodal" id="productnamemodal" autocomplete="off">
@@ -128,7 +129,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
