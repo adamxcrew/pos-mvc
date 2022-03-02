@@ -31,6 +31,12 @@ class Product extends Controller
         }
     }
 
+    public function getdata()
+    {
+        $id = $_POST['id'];
+        echo json_encode($this->model('ProductModel')->getItem($id));
+    }
+
     public function delete($id)
     {
         if ($this->model('ProductModel')->delete($id) == true) {

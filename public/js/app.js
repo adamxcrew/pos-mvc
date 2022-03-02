@@ -113,7 +113,24 @@ $(document).ready(function () {
 
     // Form Edit Data
     $(".edit_data").on('click', function () {
+
         $("#modalTitle").html('Edit Data');
+        const id = $(this).data('id');
+
+        $.ajax({
+            url: 'http://localhost/pos/public/product/getdata',
+            data: { id: id },
+            method: "POST",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                $("#productnamemodal").val(data.name)
+                $("#imgmodal").attr('src', "uploads/" + data.image)
+                $("#descriptionmodal").val(data.description)
+                $("#qtymodal").val(data.quantity)
+                $("#pricemodal").val(data.price)
+            }
+        })
     });
 
     // $(".delete_data").on('click', function () {

@@ -63,14 +63,14 @@
                         </div>
                         <div class="form-group">
                             <div class="form-group mt-3">
-                                <label for="exampleFormControlFile1">Product Image</label>
-                                <input type="file" id="files" class="form-control-file" id="exampleFormControlFile1" name="productimage">
+                                <label for="imagemodal">Product Image</label>
+                                <input type="file" id="files" class="form-control-file" id="imagemodal" name="productimage">
                                 <img width="50%" src="" alt="" id="image" class="mt-2">
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="exampleFormControlTextarea1">Description</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" id="description"></textarea>
+                            <label for="descmodal">Description</label>
+                            <textarea class="form-control" id="descmodal" rows="3" name="description" id="description"></textarea>
                         </div>
                         <div class="form-group mt-3">
                             <label for="quantity">Quantity</label>
@@ -99,12 +99,40 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="form-group mt-3">
+                        <label for="productname">Product Name</label>
+                        <input type="text" class="form-control" name="productnamemodal" id="productnamemodal" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <img id="imgmodal" class="card-img-top mt-2" src="" style="object-fit: content; width:100%; height:130px" alt="Card image cap">
+                    </div>
+                    <!-- <div class="form-group">
+                        <div class="form-group mt-3">
+                            <label for="imagemodal">Product Image</label>
+                            <input type="file" id="files" class="form-control-file" id="imagemodal" name="productimage">
+                            <img width="50%" src="" alt="" id="image" class="mt-2">
+                        </div>
+                    </div> -->
+                    <div class="form-group mt-3">
+                        <label for="descriptionmodal">Description</label>
+                        <textarea class="form-control" rows="3" name="descriptionmodal" id="descriptionmodal"></textarea>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="qtymodal">Quantity</label>
+                        <input type="number" class="form-control" name="quantitymodal" id="qtymodal" min=1>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="pricemodal">Price</label>
+                        <input type="number" class="form-control" name="pricemodal" id="pricemodal">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+
         </div>
     </div>
 </div>
