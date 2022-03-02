@@ -1,4 +1,4 @@
-<div class="container-md mt-4">
+<div class="container-fluid mt-4">
     <div class="row">
         <div class="col-md-8">
             <div class="card">
@@ -14,9 +14,15 @@
                     <div class="table-responsive-md">
                         <table class="table table-bordered">
                             <thead>
+                                <button type="submit" class="btn btn-danger btn-sm mb-2 button_del">
+                                    <i class="fas fa-trash"></i> Delete Selected
+                                </button>
                                 <tr>
+                                    <th>
+                                        <input type="checkbox" name="" id="delMultiple">
+                                    </th>
                                     <th scope="col">No</th>
-                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Product Image</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Quantity</th>
@@ -31,6 +37,9 @@
                                         foreach ($data['product'] as $row) :
                                             ?>
                                         <tr>
+                                            <td>
+                                                <input type="checkbox" value="<?= $row['idproduct'] ?>" name="idproduct[]" class="checkMultiple">
+                                            </td>
                                             <th scope="row"><?= $no++; ?></th>
                                             <td><?= $row['name']; ?></td>
                                             <td><img width="30%" src="uploads/<?= $row['image']; ?>" class="img-fluid" alt="Product Image"></td>

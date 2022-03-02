@@ -48,11 +48,6 @@ class ProductModel
         }
     }
 
-    public function delete($id)
-    {
-        $sql = "DELETE FROM tb_product WHERE idproduct= $id";
-        return $this->db->runSQL($sql);
-    }
 
     public function getItemById($id)
     {
@@ -95,5 +90,17 @@ class ProductModel
         SET name = '$name', description = '$desc', quantity = $qty, price = $price
         WHERE idproduct = $id";
         return $this->db->runSQL($sql);
+    }
+
+    public function delete($id)
+    {
+        $sql = "DELETE FROM tb_product WHERE idproduct= $id";
+        return $this->db->runSQL($sql);
+    }
+    public function multipledelete($id)
+    {
+        foreach ($id as $row) {
+            $this->delete($row);
+        }
     }
 }

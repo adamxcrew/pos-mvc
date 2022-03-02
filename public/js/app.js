@@ -148,6 +148,7 @@ $(document).ready(function () {
     //     })
     // })
 
+    // Details Modal
     $(".trans_details").on('click', function () {
         const id = $(this).data('id');
         const tax = 0.05;
@@ -166,7 +167,7 @@ $(document).ready(function () {
                     <tr>
                     <td>`+ items[item].name + `</td>
                     <td>`+ items[item].description + `</td>
-                    <td>`+ items[item].quantity + `</td>
+                    <td style="text-align:center">`+ items[item].quantity + `</td>
                     <td>`+ items[item].price + `</td>
                     <td>`+ total + `</td>
                     </tr>
@@ -176,6 +177,40 @@ $(document).ready(function () {
 
         })
     })
+
+    // Checked Multiple
+    $("#delMultiple").on('click', function () {
+        if ($(this).is(':checked')) {
+            $(".checkMultiple").prop('checked', true)
+        } else {
+            $(".checkMultiple").prop('checked', false)
+        }
+    })
+
+    $(".button_del").on('click', function (e) {
+        e.preventDefault();
+        if (confirm("Are you sure you want to delete this data?")) {
+            let id = [];
+            $(".checkMultiple:checked").each(function (i) {
+                id[i] = $(this).val();
+            })
+            if (id.length === 0) {
+                alert("Choose at least one data")
+            } else {
+                $.ajax({
+                    url: "http://localhost/pos/public/product/deletemultiple",
+                    method: "POST",
+                    data: { id: id },
+                    success: function (data) {
+                        console.log(data)
+                        location.reload();
+                    }
+                })
+            }
+        }
+
+    })
+
 
 });
 

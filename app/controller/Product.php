@@ -63,4 +63,15 @@ class Product extends Controller
             exit;
         }
     }
+
+    public function deletemultiple()
+    {
+        $id = $_POST['id'];
+        $qty = count($id, true);
+        // exit(Service::show($id));
+        if ($this->model('ProductModel')->multipledelete($id) == true) {
+            header('Location: ' . BASEULR . '/product');
+            exit;
+        }
+    }
 }
