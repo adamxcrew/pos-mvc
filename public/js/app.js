@@ -202,7 +202,6 @@ $(document).ready(function () {
                     method: "POST",
                     data: { id: id },
                     success: function (data) {
-                        console.log(data)
                         location.reload();
                     }
                 })

@@ -74,7 +74,14 @@ class Product extends Controller
     public function deletemultiple()
     {
         $id = $_POST['id'];
-        // exit(Service::show($id));
+        $imagepath = "uploads/";
+        foreach ($id as $row) {
+            $item = $this->model('ProductModel')->getItem($row);
+            $filename = $imagepath . $item['image'];
+            if (file_exists($filename)) {
+                unlink($filename);
+            }
+        }
         if ($this->model('ProductModel')->multipledelete($id) == true) {
             header('Location: ' . BASEULR . '/product');
             exit;
