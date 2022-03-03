@@ -97,6 +97,7 @@ class ProductModel
         $sql = "DELETE FROM tb_product WHERE idproduct= $id";
         return $this->db->runSQL($sql);
     }
+
     public function multipledelete($id)
     {
         foreach ($id as $row) {

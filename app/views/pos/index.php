@@ -19,8 +19,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body" id="content">
-                    <div class="row">
+                <div class="card-body">
+                    <div class="row" id="content">
                         <?php if (!empty($data['product'])) : ?>
                             <?php
                                 foreach ($data['product'] as $row) :

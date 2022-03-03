@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     // Search Product
     $('#search').on('keyup', function () {
-        // console.log("ok");
         $.ajax({
             url: "http://localhost/pos/public/pos/search",
             method: "POST",
@@ -10,8 +9,10 @@ $(document).ready(function () {
                 search: $(this).val()
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data)
                 $('#content').html(data);
+                // const items = JSON.parse(data);
+                // $("#list_transaction").empty();
             }
         })
     });
@@ -187,6 +188,7 @@ $(document).ready(function () {
         }
     })
 
+    // Delete selected
     $(".button_del").on('click', function (e) {
         e.preventDefault();
         if (confirm("Are you sure you want to delete this data?")) {

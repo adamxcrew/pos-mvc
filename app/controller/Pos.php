@@ -67,10 +67,26 @@ class Pos extends Controller
 
     public function search()
     {
-        $output = "";
         if (isset($_POST['search'])) {
+            $output = "";
             $data['product'] = ($this->model('ProductModel')->search($_POST['search']));
-            echo json_encode($data);
+            if ($data['product'] > 0) {
+                foreach ($data['product'] as $row) {
+                    $output .= '
+                    <div class="card text-center mb-3" style="width: 17rem;">
+                    <img class="card-img-top mt-2" src="uploads/' . $row['image'] . '" style="object-fit: content; width:100%; height:130px" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold">' . $row['name'] . '</h5>
+                        <h6 class="font-weight-bold" style="color: red;">' . number_format($row['price'], 2, ',', '.') . '</h6>
+                        <a href="' . BASEULR . '/pos/cart/' . $row['idproduct'] . '" class="btn btn-primary">Add To Cart <i class="fas fa-cart-plus"></i> </a>
+                    </div>
+                </div>';
+                }
+                echo $output;
+            } else {
+                $output = "<h4 class='text-danger'>Data Not Found</h4>";
+                echo $output;
+            }
         }
     }
 
