@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?= BASEULR ?>/home">Home</a>
+                        <a class="nav-link" href="<?= BASEULR ?>/home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASEULR ?>/product">Product</a>
@@ -33,6 +33,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASEULR; ?>/transactions">Transactions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASEULR; ?>/chart">Sales Chart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= BASEULR; ?>/auth/logout">Logout</a>

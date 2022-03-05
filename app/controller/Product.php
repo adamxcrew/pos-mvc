@@ -11,7 +11,15 @@ class Product extends Controller
     }
     public function index()
     {
+
+        // $amountofdata = $this->model('ProductModel')->count();
+        // $limit = 4;
+        // $start = 0;
+        // $numberofpages = ceil($amountofdata / $limit);
+
         $data['product'] = $this->model('ProductModel')->getAllData();
+        // $data['numberofpage'] = $numberofpages;
+        // Service::show($data);
 
         $this->view('templates/header');
         $this->view('product/index', $data);

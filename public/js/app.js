@@ -212,6 +212,14 @@ $(document).ready(function () {
 
     })
 
+    // active url
+    let path = location.pathname.split('/');
+    let url = location.origin + '/' + path[1] + '/' + path[2] + '/' + path[3];
+    $('ul.navbar-nav li a').each(function () {
+        if ($(this).attr('href').indexOf(url) !== -1) {
+            $(this).addClass('active')
+        }
+    })
 
 });
 

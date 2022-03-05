@@ -76,4 +76,20 @@ class TransactionModel
         $sql = "DELETE FROM tb_product_transaction WHERE invoice_number IN('$invoice')";
         return $this->db->runSQL($sql);
     }
+
+    public function chartLabel()
+    {
+        $sql = "SELECT * FROM tb_product_transaction AS pt 
+        INNER JOIN tb_product AS p
+        ON pt.idproduct = p.idproduct GROUP BY p.name";
+        return $this->db->getAll($sql);
+    }
+
+    public function chartData()
+    {
+        $sql = "SELECT SUM(pt.quantity) AS sold FROM tb_product_transaction as pt 
+        INNER JOIN tb_product as p 
+        ON pt.idproduct=p.idproduct GROUP BY p.name";
+        return $this->db->getAll($sql);
+    }
 }
