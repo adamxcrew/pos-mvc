@@ -104,4 +104,7 @@ class ProductModel
             $this->delete($row);
         }
     }
+
+    public function infoStock()
+    { }
 }
