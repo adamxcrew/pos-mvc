@@ -62,7 +62,7 @@
     const ChartInfo = new Chart(chartInfo, {
         type: 'doughnut',
         data: {
-            labels: [<?php foreach ($data['label'] as $label) {
+            labels: [<?php foreach ($data['product'] as $label) {
                             echo '"' . $label['name'] . '",';
                         } ?>],
             datasets: [{
