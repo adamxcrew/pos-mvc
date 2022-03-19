@@ -11,16 +11,7 @@ class Product extends Controller
     }
     public function index()
     {
-
-        // $amountofdata = $this->model('ProductModel')->count();
-        // $limit = 4;
-        // $start = 0;
-        // $numberofpages = ceil($amountofdata / $limit);
-
         $data['product'] = $this->model('ProductModel')->getAllData();
-        // $data['numberofpage'] = $numberofpages;
-        // Service::show($data);
-
         $this->view('templates/header');
         $this->view('product/index', $data);
         $this->view('templates/footer');
@@ -29,11 +20,11 @@ class Product extends Controller
     public function create()
     {
         if ($this->model('ProductModel')->addDataProduct($_POST) == true) {
-            // Flasher::setMessage('Sucess', 'added', 'success');
+            Flasher::setMessage('Sucess', 'added', 'success');
             header('location: ' . BASEULR . '/product');
             exit;
         } else {
-            Flasher::setMessage('Sucess', 'added', 'success');
+            Flasher::setMessage('Fail', 'failed', 'danger');
             header('location: ' . BASEULR . '/product');
             exit;
         }

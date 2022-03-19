@@ -221,5 +221,8 @@ $(document).ready(function () {
         }
     })
 
+    // Datatables Client Side
+    $('#example').DataTable();
+
 });
 

@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive-md">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="example">
                             <thead>
                                 <button type="submit" class="btn btn-danger btn-sm mb-2 button_del">
                                     <i class="fas fa-trash"></i> Delete Selected
