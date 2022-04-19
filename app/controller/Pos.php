@@ -26,17 +26,22 @@ class Pos extends Controller
     {
         $this->id_product = $id;
         $data = $this->model('ProductModel')->getItemById($id);
-
-        if (isset($_SESSION['cart'][$this->id_product])) {
-            if ($_SESSION['cart'][$this->id_product]['value'] == $data['quantity']) {
-                Flasher::setMessage('Quantity Cart Exceeds Stock', 'Wrong', 'danger');
-                header('location: ' . BASEULR . '/pos');
-                exit;
-            } else {
-                $_SESSION['cart'][$this->id_product]['value'] += 1;
-            }
+        if ($data['quantity'] == 0) {
+            Flasher::setMessage('Quantity Cart Exceeds Stock', 'Wrong', 'danger');
+            header('location: ' . BASEULR . '/pos');
+            exit;
         } else {
-            $_SESSION['cart'][$this->id_product]['value'] = 1;
+            if (isset($_SESSION['cart'][$this->id_product])) {
+                if ($data['quantity'] < $_SESSION['cart'][$this->id_product]['value']) {
+                    Flasher::setMessage('Quantity Cart Exceeds Stock', 'Wrong', 'danger');
+                    header('location: ' . BASEULR . '/pos');
+                    exit;
+                } else {
+                    $_SESSION['cart'][$this->id_product]['value'] += 1;
+                }
+            } else {
+                $_SESSION['cart'][$this->id_product]['value'] = 1;
+            }
         }
 
         array_push($_SESSION['cart'][$this->id_product], $data);
@@ -145,6 +150,11 @@ class Pos extends Controller
         for ($i = 0; $i < count($dataIdentf); $i++) {
             if ($product[$i]['quantity'] > $dataIdentf[$i]['value']) {
                 // update qty on tb_product
+                $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
+                $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
+                unset($_SESSION['cart'][$product[$i]['idproduct']]);
+                header('location: ' . BASEULR . '/transactions');
+            } else if ($product[$i]['quantity'] == 1 && $dataIdentf[$i]['value'] == 1) {
                 $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
                 $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
                 unset($_SESSION['cart'][$product[$i]['idproduct']]);
