@@ -115,26 +115,40 @@ class Pos extends Controller
             // Add into tb_transaction
             $payment = $_POST['payment'];
             $userid = $_SESSION['iduser'];
-            for ($i = 0; $i < count($dataIdentf); $i++) {
-                $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
-                // Add tb_product_transaction
-                $this->model('TransactionModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
-            }
-            $total = $total + $tax;
-            $this->model('TransactionModel')->transaction($userid, $payment, $total);
+            $this->transactionProduct($dataIdentf);
+            $this->model('TransactionModel')->transaction($userid, $payment, $this->getTotal($dataIdentf, $product, $tax));
 
             // update qyt, add into tb_transaction
-            for ($i = 0; $i < count($dataIdentf) + 1; $i++) {
-                if ($dataIdentf[$i]['value'] < $product[$i]['quantity']) {
+            $this->updateAddTransaction($dataIdentf, $product);
+        }
+    }
 
-                    // update qty on tb_product
-                    $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
-                    $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
-                    unset($_SESSION['cart'][$product[$i]['idproduct']]);
-                } else {
-                    header('location: ' . BASEULR . '/transactions');
-                    exit;
-                }
+    protected function getTotal($dataIdentf, $product, $tax)
+    {
+
+        $total = 0;
+        for ($i = 0; $i < count($dataIdentf); $i++) {
+            $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
+        }
+        return $total + (int) $tax;
+    }
+
+    protected function transactionProduct($dataIdentf)
+    {
+        for ($i = 0; $i < count($dataIdentf); $i++) {
+            $this->model('TransactionModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
+        }
+    }
+
+    protected function updateAddTransaction($dataIdentf, $product)
+    {
+        for ($i = 0; $i < count($dataIdentf); $i++) {
+            if ($product[$i]['quantity'] > $dataIdentf[$i]['value']) {
+                // update qty on tb_product
+                $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
+                $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
+                unset($_SESSION['cart'][$product[$i]['idproduct']]);
+                header('location: ' . BASEULR . '/transactions');
             }
         }
     }

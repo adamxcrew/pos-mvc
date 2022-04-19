@@ -40,11 +40,11 @@ class TransactionModel
 
     private function generateInvoice()
     {
-        $row = $this->getLastInvoice();
-        $number = substr($row['invoice_number'], 7);
         if ($this->getLastInvoice() == null) {
             $invoe = 'T' . date('y') . date('m') . str_pad(1, 3, '0', STR_PAD_LEFT);
         } else {
+            $row = $this->getLastInvoice();
+            $number = substr($row['invoice_number'], 7);
             $invoe = 'T' . date('y') . date('m') . str_pad($number + 1, 3, '0', STR_PAD_LEFT);
         }
         return $invoe;
