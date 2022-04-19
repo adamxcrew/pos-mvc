@@ -27,13 +27,13 @@ class Pos extends Controller
         $this->id_product = $id;
         $data = $this->model('ProductModel')->getItemById($id);
         if ($data['quantity'] == 0) {
-            Flasher::setMessage('Quantity Cart Exceeds Stock', 'Wrong', 'danger');
+            Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
             header('location: ' . BASEULR . '/pos');
             exit;
         } else {
             if (isset($_SESSION['cart'][$this->id_product])) {
-                if ($data['quantity'] < $_SESSION['cart'][$this->id_product]['value']) {
-                    Flasher::setMessage('Quantity Cart Exceeds Stock', 'Wrong', 'danger');
+                if ($data['quantity'] <= $_SESSION['cart'][$this->id_product]['value']) {
+                    Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
                     header('location: ' . BASEULR . '/pos');
                     exit;
                 } else {
@@ -148,13 +148,8 @@ class Pos extends Controller
     protected function updateAddTransaction($dataIdentf, $product)
     {
         for ($i = 0; $i < count($dataIdentf); $i++) {
-            if ($product[$i]['quantity'] > $dataIdentf[$i]['value']) {
+            if ($product[$i]['quantity'] > $dataIdentf[$i]['value'] || $product[$i]['quantity'] == 1 && $dataIdentf[$i]['value'] == 1) {
                 // update qty on tb_product
-                $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
-                $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
-                unset($_SESSION['cart'][$product[$i]['idproduct']]);
-                header('location: ' . BASEULR . '/transactions');
-            } else if ($product[$i]['quantity'] == 1 && $dataIdentf[$i]['value'] == 1) {
                 $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
                 $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
                 unset($_SESSION['cart'][$product[$i]['idproduct']]);
