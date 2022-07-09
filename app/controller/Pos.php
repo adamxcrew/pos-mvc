@@ -8,10 +8,7 @@ class Pos extends Controller
 
     public function __construct()
     {
-        if (($_SESSION['session_login'] != 'Login')) {
-            header('location: ' . BASEULR . '/auth');
-            exit;
-        }
+        Service::checkLogin();
     }
 
     public function index()
@@ -130,7 +127,6 @@ class Pos extends Controller
 
     protected function getTotal($dataIdentf, $product, $tax)
     {
-
         $total = 0;
         for ($i = 0; $i < count($dataIdentf); $i++) {
             $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];

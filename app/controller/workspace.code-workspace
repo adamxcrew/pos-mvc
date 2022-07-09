@@ -1,0 +1,46 @@
+{
+	"folders": [
+		{
+			"path": "E:\\Belajar Website\\WPU Javascript\\Javascript"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Website\\vue3-basic"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Website\\LearnVue"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Website\\Codewars"
+		},
+		{
+			"path": "..\\.."
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Built With Angga\\LaraVue\\fashi-shayna"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Built With Angga\\LaraVue\\between-backend"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Built With Angga\\LaraVue\\shayna-admin-html\\shayna-admin-html-master"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Built With Angga\\LaraVue\\vuestore\\VueStore"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Laravel\\blog-app"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Website\\Front End\\News Landing Page"
+		},
+		{
+			"path": "D:\\Kuliah\\Ngoding\\Website\\Front End\\Html"
+		},
+		{
+			"path": "..\\..\\..\\phpbasic"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "News Landing Page"
+	}
+}

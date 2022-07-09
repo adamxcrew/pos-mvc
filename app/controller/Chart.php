@@ -2,6 +2,11 @@
 
 class Chart extends Controller
 {
+    public function __construct()
+    {
+        Service::checkLogin();
+    }
+
     public function index()
     {
 

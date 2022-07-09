@@ -9,4 +9,12 @@ class Service
         var_dump($data);
         echo "</pre>";
     }
+
+    static function checkLogin()
+    {
+        if (($_SESSION['session_login'] != 'Login')) {
+            header('location: ' . BASEULR . '/auth');
+            exit;
+        }
+    }
 }
