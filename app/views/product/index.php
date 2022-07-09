@@ -117,13 +117,6 @@
                     <div class="form-group">
                         <img id="imgmodal" class="card-img-top mt-2" src="" style="object-fit: content; width:100%; height:130px" alt="Card image cap">
                     </div>
-                    <!-- <div class="form-group">
-                        <div class="form-group mt-3">
-                            <label for="imagemodal">Product Image</label>
-                            <input type="file" id="files" class="form-control-file" id="imagemodal" name="productimage">
-                            <img width="50%" src="" alt="" id="image" class="mt-2">
-                        </div>
-                    </div> -->
                     <div class="form-group mt-3">
                         <label for="descriptionmodal">Description</label>
                         <textarea class="form-control" rows="3" name="descriptionmodal" id="descriptionmodal"></textarea>

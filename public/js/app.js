@@ -197,8 +197,9 @@ $(document).ready(function () {
                 id[i] = $(this).val();
             })
             if (id.length === 0) {
-                alert("Choose at least one data")
-            } else {
+                alert("Choose at least one dataaaaaaaa")
+            }
+            else {
                 $.ajax({
                     url: "http://localhost/pos/public/product/deletemultiple",
                     method: "POST",

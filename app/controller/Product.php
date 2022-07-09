@@ -56,7 +56,6 @@ class Product extends Controller
         if (file_exists($filename)) {
             unlink($filename);
         }
-        // exit(Service::show($data['image']));
         if ($this->model('ProductModel')->delete($id) == true) {
             Flasher::setMessage('succeed', 'deleted', 'success');
             header('Location: ' . BASEULR . '/product');
