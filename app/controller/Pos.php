@@ -22,12 +22,15 @@ class Pos extends Controller
     public function cart($id = '')
     {
         $this->id_product = $id;
+        // cek data dengan id tersebut
         $data = $this->model('ProductModel')->getItemById($id);
+
         if ($data['quantity'] == 0) {
             Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
             header('location: ' . BASEULR . '/pos');
             exit;
         } else {
+            // memeriksa apakah suatu variabel sudah diatur atau belum
             if (isset($_SESSION['cart'][$this->id_product])) {
                 if ($data['quantity'] <= $_SESSION['cart'][$this->id_product]['value']) {
                     Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
@@ -40,11 +43,11 @@ class Pos extends Controller
                 $_SESSION['cart'][$this->id_product]['value'] = 1;
             }
         }
-
+        Service::show($_SESSION['cart']);
         array_push($_SESSION['cart'][$this->id_product], $data);
 
-        header('location: ' . BASEULR . '/pos');
-        exit;
+        // header('location: ' . BASEULR . '/pos');
+        // exit;
     }
 
     public function decrement()
