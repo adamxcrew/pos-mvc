@@ -33,9 +33,9 @@
                             <tbody>
                                 <?php if (!empty($data['product'])) : ?>
                                     <?php
-                                        $no = 1;
-                                        foreach ($data['product'] as $row) :
-                                            ?>
+                                    $no = 1;
+                                    foreach ($data['product'] as $row) :
+                                    ?>
                                         <tr>
                                             <td>
                                                 <input type="checkbox" value="<?= $row['idproduct'] ?>" name="idproduct[]" class="checkMultiple">
@@ -143,6 +143,7 @@
 <script>
     document.getElementById('files').onchange = function(e) {
         let src = URL.createObjectURL(this.files[0]);
+        console.log(src);
         document.getElementById('image').src = src;
     }
 </script>

@@ -22,8 +22,7 @@ class Pos extends Controller
     public function cart($id = '')
     {
         $this->id_product = $id;
-        // cek data dengan id tersebut
-        $data = $this->model('ProductModel')->getItemById($id);
+        $data = $this->model('ProductModel')->getItemById($this->id_product);
 
         if ($data['quantity'] == 0) {
             Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
@@ -46,8 +45,8 @@ class Pos extends Controller
         Service::show($_SESSION['cart']);
         array_push($_SESSION['cart'][$this->id_product], $data);
 
-        // header('location: ' . BASEULR . '/pos');
-        // exit;
+        header('location: ' . BASEULR . '/pos');
+        exit;
     }
 
     public function decrement()
@@ -155,5 +154,20 @@ class Pos extends Controller
                 header('location: ' . BASEULR . '/transactions');
             }
         }
+        $_SESSION['cart'][$this->id_product] = 1;
+        Service::show($_SESSION['cart']);
+
+        for ($i = 0; $i < count($_SESSION['cart']); $i++) {
+        }
+
+        foreach ($_SESSION['cart'] as $id => $qty) {
+            echo "Cart ini memiliki id= " . $id;
+            echo "<br>";
+            echo "Cart ini memiliki quantity= " . $qty;
+            echo "<bre>";
+        }
+
+        exit;
+        header('location: ' . BASEULR . '/pos');
     }
 }

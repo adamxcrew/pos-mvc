@@ -39,7 +39,7 @@ class ProductModel
             if (file_exists($target_dir)) {
                 echo "Sorry, image file already exist";
             } else {
-                $sql = "INSERT INTO tb_product VALUES('','$productname','$image','$desc',$qty,$price,'$date')";
+                $sql = "INSERT INTO tb_product (name, image, description, quantity, price, created_at) VALUES('$productname','$image','$desc',$qty,$price,'$date')";
                 if ($sql) {
                     move_uploaded_file($temp, "uploads/" . $image);
                     return $this->db->runSQL($sql);

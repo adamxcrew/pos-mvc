@@ -10,6 +10,7 @@ class Service
         echo "</pre>";
     }
 
+
     static function checkLogin()
     {
         if (($_SESSION['session_login'] != 'Login')) {
