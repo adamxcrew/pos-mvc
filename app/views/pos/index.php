@@ -23,14 +23,14 @@
                     <div class="row" id="content">
                         <?php if (!empty($data['product'])) : ?>
                             <?php
-                                foreach ($data['product'] as $row) :
-                                    ?>
+                            foreach ($data['product'] as $row) :
+                            ?>
                                 <div class="card text-center mb-3" style="width: 17rem;">
                                     <img class="card-img-top mt-2" src="uploads/<?= $row['image']; ?>" style="object-fit: content; width:100%; height:130px" alt="Card image cap">
                                     <div class="card-body">
                                         <h5 class="card-title font-weight-bold"><?= $row['name']; ?></h5>
                                         <h6 class="font-weight-bold" style="color: red;"><?= number_format($row['price'], 2, ',', '.')  ?></h6>
-                                        <a href="<?= BASEULR ?>/pos/cart/<?= $row['idproduct'] ?>" class="btn btn-primary">Add To Cart <i class="fas fa-cart-plus"></i> </a>
+                                        <a href="<?= BASEULR ?>/pos/cart/<?= $row['idproduct'] ?>" class="btn btn-primary">Add To Cart <i class="fa fa-plus"></i> </a>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -59,42 +59,40 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Action</th>
-                                    <th scope="col">Price</th>
+                                    <th scope="col">Sub Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (!empty($_SESSION['cart'])) : ?>
                                     <?php
-                                        $subtotal = 0;
-                                        $total = 0;
-                                        $pricetotal = 0;
-                                        $no = 1;
-                                        foreach ($_SESSION['cart'] as $key) :
-                                            $subtotal = (int) $subtotal + $key['value'] * $key[0]['price'];
-                                            $tax = 0.05 * $subtotal;
-                                            $total = $subtotal + $tax;
-                                            $pricetotal = $key['value'] * $key[0]['price'];
-                                            ?>
+                                    $no = 1;
+                                    $total = 0;
+                                    foreach ($_SESSION['cart'] as $key) :
+                                        $subTotal = (int) $key['qty'] * $key['item']['product_price'];
+                                        $total = $total + (int) $key['qty'] * (int) $key['item']['product_price'];
+
+                                    ?>
                                         <tr>
                                             <th scope="row"><?= $no++; ?></th>
                                             <td>
-                                                <?= $key[0]['name'] ?>
+                                                <?= $key['item']['product_name'] ?>
                                                 <br>
-                                                <span class="qty"> Quantity : <?= $key['value'] ?></span>
+                                                <span class="qty"> Quantity : <?= $key['qty'] ?> </span>
                                                 <br>
-                                                <span>Price : <?= $key[0]['price'] ?></span>
+                                                <span>Price: <?= number_format($key['item']['product_price'], 2, ',', '.') ?></span>
                                             </td>
                                             <td>
-                                                <a class="btn-danger btn-sm delete" data-id="<?= $key[0]['idproduct']; ?>">
-                                                    <i class="fas fa-trash" style='font-size:12px'></i>
+                                                <a class="btn-danger btn-sm delete" style="text-decoration: none; cursor: pointer;" data-id="<?= $key['item']['id_product'] ?>">
+                                                    <i class="fa fa-trash" style='font-size:12px;'></i>
                                                 </a>
-                                                <a class="btn-warning btn-sm reduce" data-id="<?= $key[0]['idproduct']; ?>">
-                                                    <i class="fas fa-minus text-white" style='font-size:12px'></i>
+                                                <a class="btn-warning btn-sm reduce" style="text-decoration: none; cursor: pointer;" data-id="<?= $key['item']['id_product'] ?>">
+                                                    <i class="fa fa-minus" style='font-size:12px;'></i>
                                                 </a>
                                             </td>
-                                            <td>Rp<?= number_format($pricetotal, 2, ',', '.')  ?></td>
+                                            <td>Rp<?= number_format($subTotal, 2, ',', '.')  ?></td>
                                         </tr>
                                     <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -102,19 +100,17 @@
                 <div class="card-footer">
                     <form method="post" action="<?= BASEULR; ?>/pos/payment">
                         <h5 class="card-title">Card Summary</h5>
-                        <p class="card-text"> Sub Total : <span id="subTotal"> <?= ($subtotal)  ?></span> </p>
-                        <p class="card-text">Tax : <span><?= number_format($tax, 2, ',', '.')  ?></span> </p>
-                        <input type="hidden" value="<?= $tax ?>" name="tax">
-                        <!-- <p class="card-text"> Tax : <span id="tax">Rp. 0</span></p> -->
-                        <p class="card-text">Total : <span id="totalAll"><?= number_format($total, 2, ',', '.')  ?></span> </p>
+                        <?php if (!empty($_SESSION['cart'])) : ?>
+                            <p class="card-text">Total :<?= number_format($total, 2, ',', '.')  ?> <span id="totalAll"></span> </p>
+                        <?php elseif (empty($_SESSION['cart'])) : ?>
+                            <p class="card-text">Total :<span id="totalAll"></span> </p>
+                        <?php endif; ?>
                         <div>
-                            <!-- <button class="btn btn-primary col-12 addtax">Add Tax</button>
-                            <button class="btn btn-danger col-12 mt-2 removetax">Remove Tax</button> -->
-                            <button class="btn btn-success col-12 mt-2" id="btnSave" disabled><i class="fas fa-save "></i> Save </button>
+                            <button class="btn btn-success col-12 mt-2" id="btnSave" disabled><i class="fa fa-save "></i> Save </button>
                         </div>
                         <div class="form-group mt-3">
                             <input type="number" name="payment" class="form-control mb-3" id="payment" placeholder="Input Customer Payment Amount" min=1>
-                            <input type="hidden" id="total" value="<?= $total ?>">
+                            <input type="hidden" id="total" name="total" value="<?= $total ?>">
                             <span>Payment : </span>
                             <h4 class="font-weight-bold mb-3 text-warning" id="paymentText">Rp. 0</h4>
                             <span>Receipt : </span>
@@ -122,7 +118,6 @@
                         </div>
                     </form>
                 </div>
-            <?php endif; ?>
             </div>
         </div>
     </div>

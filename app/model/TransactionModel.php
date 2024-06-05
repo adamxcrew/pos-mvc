@@ -15,39 +15,22 @@ class TransactionModel
         return $this->db->getAll($sql);
     }
 
-    public function transaction($iduser, $payment, $total)
+    public function transaction($invoice, $iduser, $payment, $total, $date)
     {
-        $date = date('Y-m-d');
-        $invoice = $this->generateInvoice();
-
-        $sql = "INSERT INTO tb_transaction VALUES ('','$invoice', $iduser, $payment, $total, '$date')";
+        $sql = "INSERT INTO tb_transaction (invoice_number, iduser, payment, total, created_at) VALUES ('$invoice', $iduser, $payment, $total, '$date')";
         return $this->db->runSQL($sql);
     }
 
-    private function getLastInvoice()
+    public function getLastInvoice()
     {
         $query = "SELECT * FROM tb_transaction ORDER BY invoice_number DESC LIMIT 1";
         return $this->db->getItem($query);
     }
 
-    public function addTransactionProduct($idproduct, $qty)
+    public function addTransactionProduct($idproduct, $invoice, $qty, $date)
     {
-        $invoice = $this->generateInvoice();
-        $date = date('Y-m-d');
-        $sql = "INSERT INTO tb_product_transaction VALUES ('','$idproduct','$invoice', $qty, '$date')";
+        $sql = "INSERT INTO tb_product_transaction (idproduct, invoice_number, quantity, created_at) VALUES ('$idproduct','$invoice', $qty, '$date')";
         return $this->db->runSQL($sql);
-    }
-
-    private function generateInvoice()
-    {
-        if ($this->getLastInvoice() == null) {
-            $invoe = 'T' . date('y') . date('m') . str_pad(1, 3, '0', STR_PAD_LEFT);
-        } else {
-            $row = $this->getLastInvoice();
-            $number = substr($row['invoice_number'], 7);
-            $invoe = 'T' . date('y') . date('m') . str_pad($number + 1, 3, '0', STR_PAD_LEFT);
-        }
-        return $invoe;
     }
 
     public function getDataByID($id)

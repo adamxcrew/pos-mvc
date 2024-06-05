@@ -49,12 +49,6 @@ class ProductModel
     }
 
 
-    public function getItemById($id)
-    {
-        $sql = "SELECT p.idproduct, p.name, p.price, p.quantity FROM tb_product AS p WHERE p.idproduct = '$id'";
-        return $this->db->getItemByID($sql);
-    }
-
     public function getItem($id)
     {
         $sql = "SELECT * FROM tb_product WHERE idproduct= $id";
@@ -106,5 +100,6 @@ class ProductModel
     }
 
     public function infoStock()
-    { }
+    {
+    }
 }
