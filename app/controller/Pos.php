@@ -19,6 +19,13 @@ class Pos extends Controller
     public function cart($id)
     {
         $data = $this->model('ProductModel')->getItem($id);
+        // cek apakah quantitynya 0
+        if ($data['quantity'] == 0) {
+            Flasher::setMessage('Stock null', 'danger', 'danger');
+            header('location: ' . BASEULR . '/pos');
+            exit;
+        }
+
         if (!isset($_SESSION['cart'][$id])) {
             $_SESSION['cart'][$id] = [
                 'item' => [
@@ -88,6 +95,9 @@ class Pos extends Controller
 
     private function generateInvoice($qty)
     {
+        $lastInvoice = $this->model('TransactionModel')->getLastInvoice();
+        var_dump($lastInvoice);
+        exit;
         $date = date('Y-m-d');
         return 'INV-' . str_replace('-', '', $date) . '-' . $qty;
     }
