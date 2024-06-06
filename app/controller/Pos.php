@@ -3,9 +3,6 @@
 class Pos extends Controller
 {
     protected $id_product;
-    protected $cart;
-
-
     public function __construct()
     {
         Service::checkLogin();
@@ -19,47 +16,37 @@ class Pos extends Controller
         $this->view('templates/footer');
     }
 
-    public function cart($id = '')
+    public function cart($id)
     {
-        $this->id_product = $id;
-        // cek data dengan id tersebut
-        $data = $this->model('ProductModel')->getItemById($id);
-
+        $data = $this->model('ProductModel')->getItem($id);
+        // cek apakah quantitynya 0
         if ($data['quantity'] == 0) {
-            Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
+            Flasher::setMessage('Stock null', 'danger', 'danger');
             header('location: ' . BASEULR . '/pos');
             exit;
+        }
+
+        if (!isset($_SESSION['cart'][$id])) {
+            $_SESSION['cart'][$id] = [
+                'item' => [
+                    'id_product' => $data['idproduct'],
+                    'product_name' => $data['name'],
+                    'product_price' => $data['price'],
+                    'qty_product' => $data['quantity']
+                ],
+                'qty' => 1
+            ];
         } else {
-            // memeriksa apakah suatu variabel sudah diatur atau belum
-            if (isset($_SESSION['cart'][$this->id_product])) {
-                if ($data['quantity'] <= $_SESSION['cart'][$this->id_product]['value']) {
-                    Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
-                    header('location: ' . BASEULR . '/pos');
-                    exit;
-                } else {
-                    $_SESSION['cart'][$this->id_product]['value'] += 1;
-                }
+            if ($data['quantity'] <= $_SESSION['cart'][$id]['qty']) {
+                Flasher::setMessage('Quantity Cart Exceeds Stock', 'danger', 'danger');
+                header('location: ' . BASEULR . '/pos');
+                exit;
             } else {
-                $_SESSION['cart'][$this->id_product]['value'] = 1;
+                $_SESSION['cart'][$id]['qty'] += 1;
             }
         }
-        Service::show($_SESSION['cart']);
-        array_push($_SESSION['cart'][$this->id_product], $data);
-
-        // header('location: ' . BASEULR . '/pos');
-        // exit;
-    }
-
-    public function decrement()
-    {
-        if (isset($_POST['id'])) {
-            $id = $_POST['id'];
-            $_SESSION['cart'][$id]['value'] -= 1;
-
-            if ($_SESSION['cart'][$id]['value'] == 0) {
-                unset($_SESSION['cart'][$id]);
-            }
-        }
+        header('location: ' . BASEULR . '/pos');
+        exit;
     }
 
     public function delete()
@@ -70,90 +57,64 @@ class Pos extends Controller
         }
     }
 
-    public function search()
+    public function decrementcart()
     {
-        if (isset($_POST['search'])) {
-            $output = "";
-            $data['product'] = ($this->model('ProductModel')->search($_POST['search']));
-            if ($data['product'] > 0) {
-                foreach ($data['product'] as $row) {
-                    $output .= '
-                    <div class="card text-center mb-3" style="width: 17rem;">
-                    <img class="card-img-top mt-2" src="uploads/' . $row['image'] . '" style="object-fit: content; width:100%; height:130px" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold">' . $row['name'] . '</h5>
-                        <h6 class="font-weight-bold" style="color: red;">' . number_format($row['price'], 2, ',', '.') . '</h6>
-                        <a href="' . BASEULR . '/pos/cart/' . $row['idproduct'] . '" class="btn btn-primary">Add To Cart <i class="fas fa-cart-plus"></i> </a>
-                    </div>
-                </div>';
-                }
-                echo $output;
-            } else {
-                $output = "<h4 class='text-danger'>Data Not Found</h4>";
-                echo $output;
+        if (isset($_POST['id'])) {
+            $id = $_POST['id'];
+            $_SESSION['cart'][$id]['qty'] -= 1;
+
+            if ($_SESSION['cart'][$id]['qty'] == 0) {
+                unset($_SESSION['cart'][$id]);
             }
         }
     }
 
     public function payment()
     {
+        $cartQuantity = $this->getTotalCart();
+        $date = date('Y-m-d');
+        $invoice = $this->generateInvoice($cartQuantity);
+        var_dump($invoice);
+        // insert ke tb transaction
+        $this->model('TransactionModel')->transaction($invoice, $_SESSION['iduser'], $_POST['payment'], $_POST['total'], $date);
+
         if (isset($_SESSION['cart'])) {
-            $tax = $_POST['tax'];
-            // exit(Service::show($tax));
-            $total = 0;
-            $item = $_SESSION['cart'];
-            // get session
-            foreach ($item as $row) {
-                $data = [
-                    'value' => $row['value'],
-                    'idproduct' => $row[0]['idproduct']
-                ];
-                $dataIdentf[] = $data;
-            }
-
-            // get data cart
-            for ($i = 0; $i < count($dataIdentf); $i++) {
-                $id = $dataIdentf[$i]['idproduct'];
-                $product[] = $this->model('ProductModel')->getItemById($id);
-            }
-
-            // Add into tb_transaction
-            $payment = $_POST['payment'];
-            $userid = $_SESSION['iduser'];
-            $this->transactionProduct($dataIdentf);
-            $this->model('TransactionModel')->transaction($userid, $payment, $this->getTotal($dataIdentf, $product, $tax));
-
-            // update qyt, add into tb_transaction
-            $this->updateAddTransaction($dataIdentf, $product);
-        }
-    }
-
-    protected function getTotal($dataIdentf, $product, $tax)
-    {
-        $total = 0;
-        for ($i = 0; $i < count($dataIdentf); $i++) {
-            $total = $total + $dataIdentf[$i]['value'] * $product[$i]['price'];
-        }
-        return $total + (int) $tax;
-    }
-
-    protected function transactionProduct($dataIdentf)
-    {
-        for ($i = 0; $i < count($dataIdentf); $i++) {
-            $this->model('TransactionModel')->addTransactionProduct($dataIdentf[$i]['idproduct'], $dataIdentf[$i]['value']);
-        }
-    }
-
-    protected function updateAddTransaction($dataIdentf, $product)
-    {
-        for ($i = 0; $i < count($dataIdentf); $i++) {
-            if ($product[$i]['quantity'] > $dataIdentf[$i]['value'] || $product[$i]['quantity'] == 1 && $dataIdentf[$i]['value'] == 1) {
-                // update qty on tb_product
-                $qty = $product[$i]['quantity'] - $dataIdentf[$i]['value'];
-                $this->model('ProductModel')->updateQty($product[$i]['idproduct'], $qty);
-                unset($_SESSION['cart'][$product[$i]['idproduct']]);
-                header('location: ' . BASEULR . '/transactions');
+            foreach ($_SESSION['cart'] as $key) {
+                // echo "<pre>";
+                // var_dump($key);
+                // echo "</pre>";
+                $updateQyt = $key['item']['qty_product'] - $key['qty'];
+                // insert ke tabel produk transaction
+                $this->model('TransactionModel')->addTransactionProduct($key['item']['id_product'], $invoice, $key['qty'], $date);
+                // Update quantity di tabel product
+                $this->model('ProductModel')->updateQty($key['item']['id_product'], $updateQyt);
+                unset($_SESSION['cart'][$key['item']['id_product']]);
             }
         }
+        header('location: ' . BASEULR . '/transactions');
+    }
+
+    private function generateInvoice($qty)
+    {
+        $lastInvoice = $this->model('TransactionModel')->getLastInvoice();
+        if ($lastInvoice == null) {
+            $lastNumberInvoice = 0;
+        } else {
+            $lastNumberInvoice = explode('-', $lastInvoice['invoice_number']);
+        }
+        $kode = (int) $lastNumberInvoice + 1;
+        $date = date('Y-m-d');
+        return 'INV-' . str_replace('-', '', $date) . '-' . $qty . '-' . $kode;
+    }
+
+    private function getTotalCart()
+    {
+        $qty = 0;
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $key) {
+                $qty += $key['qty'];
+            }
+        }
+        return $qty;
     }
 }

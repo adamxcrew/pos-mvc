@@ -51,10 +51,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Total</th>
+                                <th scope="col" style="text-align: center;">Quantity</th>
+                                <th scope="col" style="text-align: center;">Price</th>
+                                <th scope="col" style="text-align: center;">Sub Total</th>
                             </tr>
                         </thead>
                         <tbody id="list_transaction">

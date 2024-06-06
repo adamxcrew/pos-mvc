@@ -17,6 +17,8 @@ class Product extends Controller
 
     public function create()
     {
+        // var_dump('Say Hello');
+        // exit;
         if ($this->model('ProductModel')->addDataProduct($_POST) == true) {
             Flasher::setMessage('Sucess', 'added', 'success');
             header('location: ' . BASEULR . '/product');
