@@ -62,9 +62,9 @@ class TransactionModel
 
     public function chartLabel()
     {
-        $sql = "SELECT * FROM tb_product_transaction AS pt 
+        $sql = "SELECT pt.idproduct, p.name FROM tb_product_transaction AS pt 
         INNER JOIN tb_product AS p
-        ON pt.idproduct = p.idproduct GROUP BY p.name";
+        ON pt.idproduct = p.idproduct GROUP BY pt.idproduct, p.name";
         return $this->db->getAll($sql);
     }
 

@@ -24,28 +24,21 @@
 </div>
 
 <!-- Chart js -->
-<script src="<?= BASEULR; ?>/js/chart.js"></script>
-<script script>
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [<?php foreach ($data['label'] as $label) {
-                            echo '"' . $label['name'] . '",';
+            labels: [<?php foreach ($data['label'] as $item) {
+                            echo '"' . $item['name'] . '",';
                         } ?>],
             datasets: [{
                 label: '# of Votes',
                 data: [<?php foreach ($data['data'] as $sold) {
                             echo '"' . $sold['sold'] . '",';
                         } ?>],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
                 borderWidth: 1
             }]
         },
@@ -66,7 +59,7 @@
                             echo '"' . $label['name'] . '",';
                         } ?>],
             datasets: [{
-                label: '# of Votes',
+                label: '# Stock Product',
                 data: [<?php foreach ($data['product'] as $product) {
                             echo '"' . $product['quantity'] . '",';
                         } ?>],

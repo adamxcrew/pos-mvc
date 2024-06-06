@@ -53,7 +53,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col" style="text-align: center;">Quantity</th>
                                 <th scope="col" style="text-align: center;">Price</th>
-                                <th scope="col">Sub Total</th>
+                                <th scope="col" style="text-align: center;">Sub Total</th>
                             </tr>
                         </thead>
                         <tbody id="list_transaction">
