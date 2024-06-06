@@ -74,6 +74,7 @@ class Pos extends Controller
         $cartQuantity = $this->getTotalCart();
         $date = date('Y-m-d');
         $invoice = $this->generateInvoice($cartQuantity);
+        var_dump($invoice);
         // insert ke tb transaction
         $this->model('TransactionModel')->transaction($invoice, $_SESSION['iduser'], $_POST['payment'], $_POST['total'], $date);
 
@@ -96,10 +97,14 @@ class Pos extends Controller
     private function generateInvoice($qty)
     {
         $lastInvoice = $this->model('TransactionModel')->getLastInvoice();
-        var_dump($lastInvoice);
-        exit;
+        if ($lastInvoice == null) {
+            $lastNumberInvoice = 0;
+        } else {
+            $lastNumberInvoice = explode('-', $lastInvoice['invoice_number']);
+        }
+        $kode = (int) $lastNumberInvoice + 1;
         $date = date('Y-m-d');
-        return 'INV-' . str_replace('-', '', $date) . '-' . $qty;
+        return 'INV-' . str_replace('-', '', $date) . '-' . $qty . '-' . $kode;
     }
 
     private function getTotalCart()

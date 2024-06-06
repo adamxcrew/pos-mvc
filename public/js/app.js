@@ -131,7 +131,6 @@ $(document).ready(function () {
   // Details Modal
   $(".trans_details").on("click", function () {
     const id = $(this).data("id");
-    // console.log(id);
     $.ajax({
       url: "http://localhost/pos/public/transactions/getItem",
       data: { id: id },
@@ -141,27 +140,16 @@ $(document).ready(function () {
         const items = JSON.parse(data);
         $("#list_transaction").empty();
         for (const item in items) {
-          const total = parseInt(items[item].price) + items[item].price;
+          const subTotal =
+            parseInt(items[item].price) * parseInt(items[item].quantity);
+          console.log(subTotal);
           $("#list_transaction").append(
-            `
-                    <tr>
-                    <td>` +
-              items[item].name +
-              `</td>
-                    <td>` +
-              items[item].description +
-              `</td>
-                    <td style="text-align:center">` +
-              items[item].quantity +
-              `</td>
-                    <td>` +
-              items[item].price +
-              `</td>
-                    <td>` +
-              total +
-              `</td>
-                    </tr>
-                    `
+            `<tr>
+              <td>${items[item].name}</td>
+              <td style="text-align:center">${items[item].quantity}</td>
+              <td style="text-align:center">${items[item].price}</td>
+              <td style="text-align:center">${subTotal}</td>
+            </tr>`
           );
         }
       },

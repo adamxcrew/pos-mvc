@@ -35,7 +35,7 @@ class TransactionModel
 
     public function getDataByID($id)
     {
-        $sql = "SELECT p.name, p.description, p.price, t.total, tr.quantity FROM tb_product AS p
+        $sql = "SELECT p.name, p.price, t.total, tr.quantity FROM tb_product AS p
         INNER JOIN tb_product_transaction AS tr ON tr.idproduct = p.idproduct
         INNER JOIN tb_transaction AS t ON t.invoice_number = tr.invoice_number
         WHERE t.id_transaction = $id";
